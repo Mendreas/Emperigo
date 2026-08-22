@@ -1,0 +1,13 @@
+[build]
+  command = "rm -rf dist && mkdir -p dist && unzip -q em_perigo_app_v2_3_netlify.zip -d dist"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
