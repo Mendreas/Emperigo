@@ -1,1 +1,12 @@
-const C='em-perigo-v2-6-20260822';const A=["./","index.html","css/app.css","css/patch.css","js/app.js","data/species.json","manifest.webmanifest","assets/amur-leopard-clean-portrait.jpg","assets/amur-leopard-clean-wide.jpg","assets/amur-habitat.jpg","assets/sumatran-tiger.jpg","assets/javan-rhino-main-portrait.jpg","assets/giant-panda.jpg","assets/hyacinth-macaw.jpg","assets/fallback.jpg","assets/habitat-sumatra-display.jpg","assets/habitat-ujung-kulon-display.jpg","assets/habitat-sichuan-bamboo-display.jpg","assets/habitat-pantanal-display.jpg","assets/traits/giant-panda-1.jpg","assets/traits/javan-rhino-3.jpg","assets/traits/hyacinth-macaw-1.jpg","assets/traits/sumatran-tiger-2.jpg","assets/traits/amur-leopard-1.jpg","assets/traits/amur-leopard-2.jpg","assets/traits/amur-leopard-3.jpg","assets/traits/giant-panda-3.jpg","assets/traits/javan-rhino-1.jpg","assets/traits/sumatran-tiger-3.jpg","assets/traits/hyacinth-macaw-2.jpg","assets/traits/sumatran-tiger-1.jpg","assets/traits/hyacinth-macaw-3.jpg","assets/traits/javan-rhino-2.jpg","assets/traits/giant-panda-2.jpg"];self.addEventListener('install',e=>e.waitUntil(caches.open(C).then(c=>c.addAll(A)).then(()=>self.skipWaiting())));self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));self.addEventListener('fetch',e=>e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request))));
+const CACHE='em-perigo-v2-7a-20260822';
+self.addEventListener('install',e=>self.skipWaiting());
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
+self.addEventListener('fetch',e=>{
+  const u=new URL(e.request.url);
+  const fresh=e.request.mode==='navigate'||/\.(?:js|css|json|html)$/.test(u.pathname);
+  if(fresh){
+    e.respondWith(fetch(e.request,{cache:'no-store'}).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)));
+    return;
+  }
+  e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(n=>{const c=n.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return n})));
+});
