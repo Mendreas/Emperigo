@@ -6,6 +6,35 @@
 }
 @media (min-width:701px) and (max-width:860px){.v36-arara .v36-factrail{margin-left:24px!important;margin-right:24px!important}.v36-arara .v36-factrail article{padding:14px 12px!important;gap:9px!important}.v36-arara .v36-factrail strong{font-size:1.05rem!important}}
 
+/* Os assets de população/estado/localização já incluem o seu próprio aro.
+   O contentor deixa por isso de desenhar um segundo círculo. */
+#detailContent.v36-arara .stats-column .stat .ico,
+#detailContent .infographic[data-ai-species="amur-leopard"] .stats-column .stat .ico{
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  background:transparent!important;
+  border-radius:0!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:visible!important;
+}
+#detailContent.v36-arara .stats-column .stat .ico img,
+#detailContent .infographic[data-ai-species="amur-leopard"] .stats-column .stat .ico img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:100%!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  margin:0!important;
+  position:static!important;
+  transform:none!important;
+  background:transparent!important;
+}
+
 /* iPhone / telemoveis: mantém a composição editorial sem cortes nem sobreposições */
 @media (max-width:700px){
   #detailContent.v36-arara .info-top{overflow:hidden!important}
@@ -13,9 +42,11 @@
   #detailContent.v36-arara .animal-visual{order:0!important;width:100%!important;height:440px!important;min-height:440px!important;max-height:440px!important;margin:0!important;overflow:hidden!important}
   #detailContent.v36-arara .v36-generated-hero,#detailContent.v36-arara .v35-hero-macaw{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important}
   #detailContent.v36-arara .info-copy{order:1!important;position:relative!important;z-index:5!important;background:var(--paper)!important;padding-top:24px!important}
+  #detailContent.v36-arara .info-copy .stats-column{margin-top:34px!important}
+  #detailContent.v36-arara .info-copy>p{margin-bottom:24px!important}
   #detailContent.v36-arara .v36-callout{z-index:6!important}
-  #detailContent.v36-arara .stats-column .stat .ico{width:58px!important;height:58px!important;min-width:58px!important;display:grid!important;place-items:center!important;overflow:hidden!important}
-  #detailContent.v36-arara .stats-column .stat .ico .v36-shared-stat-icon{display:block!important;width:54px!important;height:54px!important;max-width:54px!important;max-height:54px!important;object-fit:contain!important;position:static!important;transform:none!important;margin:auto!important}
+  #detailContent.v36-arara .stats-column .stat .ico{width:58px!important;height:58px!important;min-width:58px!important;flex:0 0 58px!important}
+  #detailContent.v36-arara .stats-column .stat .ico img{width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important}
   #detailContent.v36-arara .v36-factrail{position:relative!important;z-index:8!important;clear:both!important;margin:18px 18px 28px!important;background:#f6f1e5!important;overflow:hidden!important}
   #detailContent.v36-arara .v36-factrail i{overflow:hidden!important}
 }
@@ -26,4 +57,6 @@
   #detailContent .infographic[data-ai-species="amur-leopard"] .animal-visual{order:0!important;height:470px!important;min-height:470px!important;max-height:470px!important;overflow:hidden!important;margin:0!important}
   #detailContent .infographic[data-ai-species="amur-leopard"] .animal-visual img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important}
   #detailContent .infographic[data-ai-species="amur-leopard"] .info-copy{order:1!important;background:#f6f1e5!important;position:relative!important;z-index:4!important;padding-top:22px!important}
+  #detailContent .infographic[data-ai-species="amur-leopard"] .stats-column .stat .ico{width:58px!important;height:58px!important;min-width:58px!important;flex:0 0 58px!important}
+  #detailContent .infographic[data-ai-species="amur-leopard"] .stats-column .stat .ico img{width:58px!important;height:58px!important;max-width:58px!important;max-height:58px!important}
 }
