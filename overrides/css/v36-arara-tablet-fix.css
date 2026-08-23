@@ -1,34 +1,29 @@
 @media (min-width:701px) and (max-width:1180px){
-  .v36-arara .v36-factrail{
-    grid-template-columns:repeat(6,minmax(0,1fr))!important;
-    gap:0!important;
-    margin:0 34px 34px!important;
-    border-top:2px solid var(--olive)!important;
-    border-bottom:1px solid rgba(40,48,27,.22)!important;
-    background:rgba(246,241,229,.98)!important;
-  }
-  .v36-arara .v36-factrail article{
-    grid-column:span 2;
-    min-width:0!important;
-    min-height:118px;
-    padding:16px 18px!important;
-    border-right:1px dashed rgba(58,65,37,.28)!important;
-    border-bottom:1px dashed rgba(58,65,37,.20)!important;
-    align-items:flex-start!important;
-    overflow:visible!important;
-  }
-  .v36-arara .v36-factrail article:nth-child(3){border-right:0!important;}
-  .v36-arara .v36-factrail article:nth-child(4){grid-column:2 / span 2;border-bottom:0!important;}
-  .v36-arara .v36-factrail article:nth-child(5){grid-column:4 / span 2;border-right:0!important;border-bottom:0!important;}
-  .v36-arara .v36-factrail i{width:42px!important;height:42px!important;flex:0 0 42px!important;}
-  .v36-arara .v36-factrail article>div{min-width:0!important;}
-  .v36-arara .v36-factrail b{font-size:.78rem!important;line-height:1.1!important;white-space:normal!important;}
-  .v36-arara .v36-factrail strong{font-size:1.18rem!important;line-height:1.08!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;}
-  .v36-arara .v36-factrail small{font-size:.74rem!important;line-height:1.3!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important;}
+  .v36-arara .v36-factrail{grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:0!important;margin:0 34px 34px!important;border-top:2px solid var(--olive)!important;border-bottom:1px solid rgba(40,48,27,.22)!important;background:rgba(246,241,229,.98)!important}
+  .v36-arara .v36-factrail article{grid-column:span 2;min-width:0!important;min-height:118px;padding:16px 18px!important;border-right:1px dashed rgba(58,65,37,.28)!important;border-bottom:1px dashed rgba(58,65,37,.20)!important;align-items:flex-start!important;overflow:visible!important}
+  .v36-arara .v36-factrail article:nth-child(3){border-right:0!important}.v36-arara .v36-factrail article:nth-child(4){grid-column:2/span 2;border-bottom:0!important}.v36-arara .v36-factrail article:nth-child(5){grid-column:4/span 2;border-right:0!important;border-bottom:0!important}
+  .v36-arara .v36-factrail i{width:42px!important;height:42px!important;flex:0 0 42px!important}.v36-arara .v36-factrail article>div{min-width:0!important}.v36-arara .v36-factrail b{font-size:.78rem!important;line-height:1.1!important;white-space:normal!important}.v36-arara .v36-factrail strong{font-size:1.18rem!important;line-height:1.08!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}.v36-arara .v36-factrail small{font-size:.74rem!important;line-height:1.3!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
+}
+@media (min-width:701px) and (max-width:860px){.v36-arara .v36-factrail{margin-left:24px!important;margin-right:24px!important}.v36-arara .v36-factrail article{padding:14px 12px!important;gap:9px!important}.v36-arara .v36-factrail strong{font-size:1.05rem!important}}
+
+/* iPhone / telemoveis: mantém a composição editorial sem cortes nem sobreposições */
+@media (max-width:700px){
+  #detailContent.v36-arara .info-top{overflow:hidden!important}
+  #detailContent.v36-arara .animal-data{display:flex!important;flex-direction:column!important}
+  #detailContent.v36-arara .animal-visual{order:0!important;width:100%!important;height:440px!important;min-height:440px!important;max-height:440px!important;margin:0!important;overflow:hidden!important}
+  #detailContent.v36-arara .v36-generated-hero,#detailContent.v36-arara .v35-hero-macaw{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important}
+  #detailContent.v36-arara .info-copy{order:1!important;position:relative!important;z-index:5!important;background:var(--paper)!important;padding-top:24px!important}
+  #detailContent.v36-arara .v36-callout{z-index:6!important}
+  #detailContent.v36-arara .stats-column .stat .ico{width:58px!important;height:58px!important;min-width:58px!important;display:grid!important;place-items:center!important;overflow:hidden!important}
+  #detailContent.v36-arara .stats-column .stat .ico .v36-shared-stat-icon{display:block!important;width:54px!important;height:54px!important;max-width:54px!important;max-height:54px!important;object-fit:contain!important;position:static!important;transform:none!important;margin:auto!important}
+  #detailContent.v36-arara .v36-factrail{position:relative!important;z-index:8!important;clear:both!important;margin:18px 18px 28px!important;background:#f6f1e5!important;overflow:hidden!important}
+  #detailContent.v36-arara .v36-factrail i{overflow:hidden!important}
 }
 
-@media (min-width:701px) and (max-width:860px){
-  .v36-arara .v36-factrail{margin-left:24px!important;margin-right:24px!important;}
-  .v36-arara .v36-factrail article{padding:14px 12px!important;gap:9px!important;}
-  .v36-arara .v36-factrail strong{font-size:1.05rem!important;}
+/* Leopardo: no iPhone não deixar a imagem central invadir a toolbar nem cortar o corpo */
+@media (max-width:700px){
+  #detailContent .infographic[data-ai-species="amur-leopard"] .animal-data{display:flex!important;flex-direction:column!important}
+  #detailContent .infographic[data-ai-species="amur-leopard"] .animal-visual{order:0!important;height:470px!important;min-height:470px!important;max-height:470px!important;overflow:hidden!important;margin:0!important}
+  #detailContent .infographic[data-ai-species="amur-leopard"] .animal-visual img{width:100%!important;height:100%!important;object-fit:contain!important;object-position:center bottom!important;transform:none!important}
+  #detailContent .infographic[data-ai-species="amur-leopard"] .info-copy{order:1!important;background:#f6f1e5!important;position:relative!important;z-index:4!important;padding-top:22px!important}
 }
