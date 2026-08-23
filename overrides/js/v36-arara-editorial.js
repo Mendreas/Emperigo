@@ -6,7 +6,7 @@ const W='https://commons.wikimedia.org/wiki/Special:FilePath/';
 const facts=[['length','COMPRIMENTO','100–130 cm','incluindo a longa cauda'],['weight','PESO','1,2–1,7 kg','a maior arara em comprimento'],['location','ONDE VIVE','Brasil','Pantanal, Cerrado, Caatinga e áreas adjacentes'],['social','SOCIAL','Pares e grupos','casais duradouros e comunicativos'],['life','LONGEVIDADE','50+ anos','pode viver várias décadas']];
 const foods=[
  [W+encodeURIComponent('Attalea speciosa seed.jpg'),'BABAÇU','Fruto duro de palmeira'],
- [W+encodeURIComponent('Acrocomia aculeata Fruit Shell Composition.png'),'BOCAIÚVA','Alimento-chave no Pantanal'],
+ [W+encodeURIComponent('Acrocomia mexicana-fruits-1.jpg'),'BOCAIÚVA','Alimento-chave no Pantanal'],
  [W+encodeURIComponent('Buriti Paulo R Souza Baixa resol.jpg'),'BURITI','Fruto de palmeira'],
  [W+encodeURIComponent('Jatoba no Ceara.jpg'),'JATOBÁ','Frutos e sementes'],
  [W+encodeURIComponent('Mangoes pic.jpg'),'MANGA','Quando disponível'],
