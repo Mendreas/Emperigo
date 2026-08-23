@@ -1,7 +1,7 @@
 (()=>{
   const ROOT='assets/generated-v34/amur-leopard/';
   const TRAITS=['trait-1.webp','trait-2.webp','trait-3.webp'];
-  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.2';
+  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.3';
   let queued=false;
 
   function isLeopard(root){
@@ -13,7 +13,7 @@
     TRAITS.forEach((file,i)=>{
       const img=imgs[i];
       if(!img)return;
-      const wanted=ROOT+file+'?v=4.3.2';
+      const wanted=ROOT+file+'?v=4.3.3';
       if(img.getAttribute('src')!==wanted) img.src=wanted;
       img.style.objectFit='cover';
       img.style.objectPosition='center';
@@ -26,31 +26,38 @@
   function fixMap(root){
     const card=root.querySelector('.where-card');
     if(!card)return;
-
-    const canonical=card.querySelector('.v45-leopard-map');
-    const extras=[...card.querySelectorAll('.amur-static-range,.v43-static-map')].filter(el=>!el.classList.contains('v45-leopard-map'));
-    extras.forEach(el=>el.remove());
-
-    // Remove the old dynamic-map target so older patches cannot create a second map.
-    card.querySelectorAll('#speciesRangeMap,.species-range-map,.leaflet-container').forEach(el=>el.remove());
-    try{ window.state?.detailMap?.remove?.(); }catch(e){}
-
-    if(!canonical){
-      const img=document.createElement('img');
-      img.className='amur-static-range v45-leopard-map zoomable-image';
-      img.src=MAP;
-      img.alt='Distribuição histórica e atual do Leopardo-de-Amur';
-      img.style.display='block';
-      img.style.width='100%';
-      img.style.height='auto';
-      img.style.borderRadius='0 0 16px 16px';
-      const heading=card.querySelector('.heading');
-      if(heading) heading.insertAdjacentElement('afterend',img); else card.prepend(img);
+    const current=card.querySelector('.v45-leopard-map');
+    if(card.dataset.staticMapVersion==='433' && current){
+      if(current.getAttribute('src')!==MAP) current.src=MAP;
+      return;
     }
 
-    // Avoid duplicate explanatory blocks inherited from older map implementations.
-    const notes=[...card.querySelectorAll('.range-note')];
-    notes.forEach(n=>n.style.display='none');
+    try{ window.state?.detailMap?.remove?.(); }catch(e){}
+
+    const heading=card.querySelector('.heading')?.cloneNode(true);
+    card.innerHTML='';
+    if(heading){
+      card.appendChild(heading);
+    }else{
+      const h=document.createElement('div');
+      h.className='heading';
+      h.innerHTML='<span class="brush">ONDE VIVE?</span>';
+      card.appendChild(h);
+    }
+
+    const img=document.createElement('img');
+    img.className='v43-static-map v45-leopard-map zoomable-image';
+    img.src=MAP;
+    img.alt='Distribuição histórica e atual do Leopardo-de-Amur';
+    img.draggable=false;
+    img.style.display='block';
+    img.style.width='100%';
+    img.style.height='auto';
+    img.style.objectFit='contain';
+    img.style.borderRadius='0 0 16px 16px';
+    img.style.background='#f3efe3';
+    card.appendChild(img);
+    card.dataset.staticMapVersion='433';
   }
 
   function fix(){
@@ -64,7 +71,7 @@
   function schedule(){
     if(queued)return;
     queued=true;
-    requestAnimationFrame(()=>{fix();setTimeout(fix,80);});
+    requestAnimationFrame(()=>{fix();setTimeout(fix,100);});
   }
 
   function start(){
