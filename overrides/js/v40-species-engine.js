@@ -21,12 +21,13 @@ const ICONS={
 };
 const icon=k=>`<svg class="v40-icon" viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]||ICONS.population}</svg>`;
 const COMMONS='https://commons.wikimedia.org/wiki/Special:FilePath/';
+const SHARED_STATS='assets/generated-v34/amur-leopard/';
+const SHARED_STAT_FILES=['pop-estimada.webp','status.webp','location.webp'];
 
 const SPECIES={
  'PANDA-GIGANTE':{
   id:'giant-panda',
   hero:'assets/generated-v39/giant-panda/animal_main.webp',
-  statsIcons:['population','status','location'],
   facts:[
    ['1 860','INDIVÍDUOS NA NATUREZA','estimativa de referência'],
    ['99%','DA DIETA É BAMBU','especialização extrema'],
@@ -35,10 +36,10 @@ const SPECIES={
    ['1 200–3 500 m','ALTITUDE TÍPICA','florestas montanhosas']
   ],
   traits:[
-   ['assets/generated-v39/giant-panda/animal_main.webp','POLEGAR “FALSO”','Um osso do pulso alongado funciona como um polegar e permite agarrar caules de bambu.','31% 69%',2.45],
-   ['assets/generated-v39/giant-panda/animal_main.webp','MANCHAS ICÓNICAS','As áreas negras em redor dos olhos, orelhas e membros formam um padrão imediatamente reconhecível.','50% 20%',2.65],
-   ['assets/generated-v39/giant-panda/animal_main.webp','PELO ESPESSO','A pelagem densa ajuda a suportar o frio e a humidade das montanhas.','33% 53%',3.1],
-   [COMMONS+encodeURIComponent('Panda Cub from Wolong, Sichuan, China.JPG'),'BEBÉS MUITO PEQUENOS','As crias nascem minúsculas, cegas e rosadas, extremamente dependentes da mãe.','50% 45%',1]
+   ['assets/generated-v39/giant-panda/animal_main.webp','POLEGAR “FALSO”','Um osso do pulso alongado funciona como um polegar e permite agarrar caules de bambu.','50% 50%',3.15,'66% 46%'],
+   ['assets/generated-v39/giant-panda/animal_main.webp','MANCHAS ICÓNICAS','As áreas negras em redor dos olhos, orelhas e membros formam um padrão imediatamente reconhecível.','50% 50%',3.15,'50% 22%'],
+   ['assets/generated-v39/giant-panda/animal_main.webp','PELO ESPESSO','A pelagem densa ajuda a suportar o frio e a humidade das montanhas.','50% 50%',3.45,'24% 50%'],
+   [COMMONS+encodeURIComponent('Panda Cub from Wolong, Sichuan, China.JPG'),'BEBÉS MUITO PEQUENOS','As crias nascem minúsculas, cegas e rosadas, extremamente dependentes da mãe.','50% 45%',1,'50% 50%']
   ],
   dietTitle:'DIETA: 99% BAMBU',
   dietIntro:'Apesar da ancestralidade carnívora, o panda evoluiu para uma dieta quase exclusivamente herbívora.',
@@ -60,9 +61,9 @@ const SPECIES={
  }
 };
 
-function renderStats(root,cfg){
+function renderStats(root){
  const holders=[...root.querySelectorAll('.stats-column .stat .ico')];
- cfg.statsIcons.forEach((k,i)=>{if(holders[i]){holders[i].classList.add('v40-stat-icon');holders[i].innerHTML=icon(k)}});
+ SHARED_STAT_FILES.forEach((file,i)=>{if(holders[i]){holders[i].classList.add('v40-stat-icon','v40-shared-stat');holders[i].innerHTML=`<img src="${SHARED_STATS}${file}" alt="">`}});
 }
 function renderFacts(root,cfg){
  const animalData=root.querySelector('#detail-animal .animal-data'); if(!animalData)return;
@@ -71,7 +72,7 @@ function renderFacts(root,cfg){
 }
 function renderTraits(root,cfg){
  const unique=root.querySelector('.unique-grid'); if(!unique)return;
- unique.innerHTML=cfg.traits.map(t=>`<div class="unique-item v40-trait"><div class="crop"><img src="${t[0]}" alt="${SAFE(t[1])}" style="object-position:${SAFE(t[3]||'50% 50%')};--trait-zoom:${Number(t[4]||1)}"></div><div><h4>${SAFE(t[1])}</h4><p>${SAFE(t[2])}</p></div></div>`).join('');
+ unique.innerHTML=cfg.traits.map(t=>`<div class="unique-item v40-trait"><div class="crop"><img src="${t[0]}" alt="${SAFE(t[1])}" style="object-position:${SAFE(t[3]||'50% 50%')};--trait-zoom:${Number(t[4]||1)};--trait-origin:${SAFE(t[5]||'50% 50%')}"></div><div><h4>${SAFE(t[1])}</h4><p>${SAFE(t[2])}</p></div></div>`).join('');
 }
 function renderDiet(root,cfg){
  const card=root.querySelector('.diet-card'); if(!card)return;
@@ -86,20 +87,28 @@ function renderThreats(root,cfg){
  const tg=root.querySelector('.threat-grid'); if(!tg)return;
  tg.innerHTML=cfg.threats.map(t=>`<div class="threat-item"><span class="ico v40-threat">${icon(t[0])}</span><div><b>${SAFE(t[1])}</b><small>${SAFE(t[2])}</small></div></div>`).join('');
 }
+function lockRangeMap(root){
+ const map=root.querySelector('.where-card .leaflet-container,#detailMap,.range-map .leaflet-container,.range-map');
+ if(!map)return;
+ map.classList.add('v40-map-locked');
+ map.setAttribute('aria-label','Mapa fixo da distribuição geográfica');
+ map.setAttribute('title','Mapa de distribuição — vista fixa');
+}
 function apply(){
  const root=Q('#detailContent'); if(!root)return;
  const title=root.querySelector('.info-title h1')?.textContent?.trim().toUpperCase();
  const cfg=SPECIES[title]; if(!cfg)return;
  const info=root.querySelector('.infographic'); if(!info)return;
- const stamp=`${cfg.id}:v401`;
- if(info.dataset.v40Engine===stamp)return;
+ const stamp=`${cfg.id}:v402`;
+ if(info.dataset.v40Engine===stamp){lockRangeMap(root);return;}
  info.dataset.v40Engine=stamp; info.classList.add('v40-engine',`v40-${cfg.id}`);
  const hero=root.querySelector('.animal-visual img'); if(hero){hero.src=cfg.hero;hero.alt=title;hero.classList.add('v40-hero')}
- renderStats(root,cfg);renderFacts(root,cfg);renderTraits(root,cfg);renderDiet(root,cfg);renderStory(root,cfg);renderThreats(root,cfg);
+ renderStats(root);renderFacts(root,cfg);renderTraits(root,cfg);renderDiet(root,cfg);renderStory(root,cfg);renderThreats(root,cfg);lockRangeMap(root);
 }
 let scheduled=false;
 function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;apply()})}
-const start=()=>{const d=Q('#detailContent');if(d)new MutationObserver(schedule).observe(d,{childList:true,subtree:true});schedule()};
+const preload=new Image();preload.src='assets/generated-v39/giant-panda/animal_main.webp';
+const start=()=>{const d=Q('#detailContent');if(d)new MutationObserver(schedule).observe(d,{childList:true,subtree:true,attributes:true});schedule()};
 document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();
 document.addEventListener('click',()=>setTimeout(schedule,0),true);
 })();
