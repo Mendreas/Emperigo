@@ -1,4 +1,4 @@
-const CACHE='em-perigo-v3-4-2-20260822';
+const CACHE='em-perigo-v4-3-0-20260823';
 self.addEventListener('install',e=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{
