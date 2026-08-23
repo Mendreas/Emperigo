@@ -1,7 +1,7 @@
 (()=>{
   const ASSET='assets/generated-v34/amur-leopard/';
   const DIET_ASSET='assets/diet/';
-  const preloadFiles=['animal.webp','habitat-generated.webp','where-lives.webp','animal-final.webp'];
+  const preloadFiles=['animal.webp','habitat-generated.webp','mapa_distribuicao.webp','animal-final.webp'];
   preloadFiles.forEach(file=>{const im=new Image();im.src=ASSET+file});
   const isReload=()=>{try{return performance.getEntriesByType('navigation')[0]?.type==='reload'}catch{return false}};
   if(isReload()&&/^#species\//.test(location.hash))history.replaceState(null,'',location.pathname+location.search);
@@ -45,7 +45,7 @@
     if(img.complete&&img.naturalWidth)img.style.opacity='1';
   };
   const setIcon=(holder,file,alt='')=>{if(!holder)return;const old=holder.innerHTML;holder.innerHTML=`<img class="amur-custom-icon" src="${ASSET}${file}" alt="${alt}">`;const img=holder.querySelector('img');if(img)img.onerror=()=>{holder.innerHTML=old}};
-  const applyWhereArt=d=>{const card=d.querySelector('.where-card');if(!card||card.classList.contains('amur-where-art'))return;card.classList.add('amur-where-art');const heading=card.querySelector('.heading');const img=document.createElement('img');img.className='amur-static-range zoomable-image';img.src=ASSET+'where-lives.webp';img.alt='Onde vive o Leopardo-de-Amur — distribuição histórica e atual';img.onerror=()=>{img.remove();card.classList.remove('amur-where-art')};heading?.insertAdjacentElement('afterend',img)};
+  const applyWhereArt=d=>{const card=d.querySelector('.where-card');if(!card||card.classList.contains('amur-where-art'))return;card.classList.add('amur-where-art');const heading=card.querySelector('.heading');const img=document.createElement('img');img.className='amur-static-range zoomable-image';img.src=ASSET+'mapa_distribuicao.webp';img.alt='Mapa da distribuição histórica e atual do Leopardo-de-Amur';img.onerror=()=>{img.remove();card.classList.remove('amur-where-art')};heading?.insertAdjacentElement('afterend',img)};
   const applyAmur=()=>{
     const d=document.getElementById('detailContent');if(!d||d.querySelector('.info-title h1')?.textContent?.trim()!=='Leopardo-de-Amur')return;
     const info=d.querySelector('.infographic');if(!info||info.dataset.amurAssetsApplied==='1')return;
