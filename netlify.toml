@@ -1,5 +1,5 @@
 [build]
-  command = "rm -rf dist && mkdir -p dist && unzip -q em_perigo_app_v2_3_netlify.zip -d dist && cp -R overrides/. dist/ && unzip -qo em_perigo_patch_v2_7b.zip -d dist"
+  command = "rm -rf dist && mkdir -p dist && unzip -q em_perigo_app_v2_3_netlify.zip -d dist && cp -R overrides/. dist/"
   publish = "dist"
 
 [build.environment]
