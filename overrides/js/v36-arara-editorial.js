@@ -1,21 +1,18 @@
 (()=>{
 const q=s=>document.querySelector(s);
-const R='https://raw.githubusercontent.com/Mendreas/Emperigo/main/overrides/assets/generated-v34/hyacinth-macaw/';
+const R='assets/generated-v34/hyacinth-macaw/';
 const HERO=R+'animal_main.webp';
+const AMUR='assets/generated-v34/amur-leopard/';
 const W='https://commons.wikimedia.org/wiki/Special:FilePath/';
 const facts=[['length','COMPRIMENTO','100–130 cm','incluindo a longa cauda'],['weight','PESO','1,2–1,7 kg','a maior arara em comprimento'],['location','ONDE VIVE','Brasil','Pantanal, Cerrado, Caatinga e áreas adjacentes'],['social','SOCIAL','Pares e grupos','casais duradouros e comunicativos'],['life','LONGEVIDADE','50+ anos','pode viver várias décadas']];
-const foods=[
- [W+encodeURIComponent('Attalea speciosa seed.jpg'),'BABAÇU','Fruto duro de palmeira'],
- [W+encodeURIComponent('Acrocomia mexicana-fruits-1.jpg'),'BOCAIÚVA','Alimento-chave no Pantanal'],
- [W+encodeURIComponent('Buriti Paulo R Souza Baixa resol.jpg'),'BURITI','Fruto de palmeira'],
- [W+encodeURIComponent('Jatoba no Ceara.jpg'),'JATOBÁ','Frutos e sementes'],
- [W+encodeURIComponent('Mangoes pic.jpg'),'MANGA','Quando disponível'],
- [W+encodeURIComponent('Jacaranda mimosifolia flowers.jpg'),'FLORES','Complemento ocasional']
-];
+const foods=[[W+encodeURIComponent('Attalea speciosa seed.jpg'),'BABAÇU','Fruto duro de palmeira'],[W+encodeURIComponent('Acrocomia mexicana-fruits-1.jpg'),'BOCAIÚVA','Alimento-chave no Pantanal'],[W+encodeURIComponent('Buriti Paulo R Souza Baixa resol.jpg'),'BURITI','Fruto de palmeira'],[W+encodeURIComponent('Jatoba no Ceara.jpg'),'JATOBÁ','Frutos e sementes'],[W+encodeURIComponent('Mangoes pic.jpg'),'MANGA','Quando disponível'],[W+encodeURIComponent('Jacaranda mimosifolia flowers.jpg'),'FLORES','Complemento ocasional']];
 const traitFiles=[R+'trait_anel_amarelo.webp',R+'trait_bico.webp',R+'trait_plumagem.webp',HERO];
+const preload=new Image();preload.src=HERO;
 function factIcon(type){const p={length:'<path d="M3 12h18M3 12l3-3m-3 3 3 3m15-3-3-3m3 3-3 3"/>',weight:'<path d="M8 6h8l3 14H5L8 6Z"/><path d="M10 6a2 2 0 1 1 4 0"/>',location:'<path d="M12 21s6-5 6-11a6 6 0 1 0-12 0c0 6 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/>',social:'<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 20c0-4 2-7 5-7s5 3 5 7M11 20c0-4 2-7 5-7s5 3 5 7"/>',life:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4m8-4v4M4 10h16"/><path d="M8 14h3m2 0h3m-8 3h3"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${p[type]}</svg>`}
 function foodPic(url,alt){return `<div class="v36-foodpic"><img src="${url}" alt="${alt}" loading="lazy" referrerpolicy="no-referrer" onerror="this.parentElement.classList.add('fallback');this.remove()"></div>`}
+function sharedIcon(holder,file,alt){if(!holder)return;holder.innerHTML=`<img class="v36-shared-stat-icon" src="${AMUR}${file}" alt="${alt}">`;}
 function build(){const root=q('#detailContent');if(!root||root.dataset.v36)return;const h=root.querySelector('.info-title h1');if(!h||!h.textContent.toUpperCase().includes('ARARA-AZUL-GRANDE'))return;root.dataset.v36='1';root.classList.add('v36-arara');
+const stats=[...root.querySelectorAll('.stats-column .stat .ico')];sharedIcon(stats[0],'pop-estimada.webp','População estimada');sharedIcon(stats[1],'status.webp','Estado de conservação');sharedIcon(stats[2],'location.webp','Localização');
 const visual=root.querySelector('.animal-visual');if(visual){const hero=visual.querySelector('img');if(hero){hero.src=HERO;hero.classList.add('v36-generated-hero');hero.alt='Arara-Azul-Grande — ilustração fotorrealista gerada';}visual.insertAdjacentHTML('beforeend','<div class="v36-callout c1"><b>ANEL AMARELO</b><span>marca inconfundível em redor dos olhos</span></div><div class="v36-callout c2"><b>BICO PODEROSO</b><span>abre sementes extremamente duras</span></div><div class="v36-callout c3"><b>PLUMAGEM AZUL</b><span>azul-cobalto intenso</span></div>');}
 const data=root.querySelector('#detail-animal .animal-data');if(data)data.insertAdjacentHTML('afterend',`<section class="v36-factrail">${facts.map(x=>`<article><i>${factIcon(x[0])}</i><div><b>${x[1]}</b><strong>${x[2]}</strong><small>${x[3]}</small></div></article>`).join('')}</section>`);
 const traits=[...root.querySelectorAll('.unique-item .crop')];traits.forEach((crop,i)=>{if(!traitFiles[i])return;crop.classList.add('v36-trait-'+(i+1));crop.innerHTML=`<img class="v36-trait-img" src="${traitFiles[i]}" alt="Característica da Arara-Azul-Grande">`});
