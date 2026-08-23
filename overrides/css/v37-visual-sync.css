@@ -1,0 +1,4 @@
+html.v37-opening-arara #detailContent .animal-visual img{opacity:0!important}
+#detailContent .stats-column .stat .ico{display:grid!important;place-items:center!important;overflow:hidden!important;line-height:0!important;padding:0!important}
+#detailContent .stats-column .stat .ico img.shared-stat-icon,#detailContent .stats-column .stat .ico img.amur-custom-icon{display:block!important;width:76%!important;height:76%!important;max-width:76%!important;max-height:76%!important;object-fit:contain!important;object-position:center center!important;margin:auto!important;transform:none!important;background:transparent!important}
+#detailContent .v37-arara-hero{opacity:1;transition:opacity .12s ease}
