@@ -1,32 +1,67 @@
 (()=>{
 const q=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-const icon=(symbol)=>`<span class="v35-symbol" aria-hidden="true">${symbol}</span>`;
+const svg=(type)=>{
+ const paths={
+  length:'<path d="M3 12h18M3 12l3-3m-3 3 3 3m15-3-3-3m3 3-3 3"/>',
+  weight:'<path d="M8 6h8l3 14H5L8 6Z"/><path d="M10 6a2 2 0 1 1 4 0"/>',
+  location:'<path d="M12 21s6-5 6-11a6 6 0 1 0-12 0c0 6 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/>',
+  social:'<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M3 20c0-4 2-7 5-7s5 3 5 7M11 20c0-4 2-7 5-7s5 3 5 7"/>',
+  life:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4m8-4v4M4 10h16"/><path d="M8 14h3m2 0h3m-8 3h3"/>',
+  nut:'<ellipse cx="12" cy="14" rx="6" ry="7"/><path d="M8 8c2-3 6-3 8 0M10 5h4"/>',
+  palm:'<circle cx="9" cy="15" r="4"/><circle cx="15" cy="15" r="4"/><path d="M12 11V4m0 2c-4 0-6 2-7 5m7-5c4 0 6 2 7 5"/>',
+  fruit:'<circle cx="12" cy="14" r="6"/><path d="M12 8c0-3 2-4 5-4"/><path d="M13 6c2-2 4-1 5 0"/>',
+  flower:'<circle cx="12" cy="12" r="2"/><circle cx="12" cy="6" r="4"/><circle cx="18" cy="12" r="4"/><circle cx="12" cy="18" r="4"/><circle cx="6" cy="12" r="4"/>',
+  fire:'<path d="M12 22c-5 0-8-3-8-7 0-4 3-6 5-9 0 3 2 4 3 5 1-4 3-6 4-9 3 4 5 8 4 13 0 4-3 7-8 7Z"/>',
+  tree:'<path d="M12 3 7 11h3l-4 6h4v4h4v-4h4l-4-6h3Z"/>',
+  cage:'<rect x="5" y="5" width="14" height="16" rx="2"/><path d="M8 5V3m8 2V3M8 8v10m4-10v10m4-10v10M5 11h14"/>',
+  nest:'<path d="M4 15c2 6 14 6 16 0H4Z"/><path d="M7 14c2-5 8-5 10 0M9 11l-2-4m6 3 2-4"/>',
+  climate:'<circle cx="8" cy="8" r="3"/><path d="M8 1v2m0 10v2M1 8h2m10 0h2M3 3l1.5 1.5M11.5 11.5 13 13M13 3l-1.5 1.5M4.5 11.5 3 13"/><path d="M14 21c4 0 7-2 7-5s-3-5-6-4c-1-3-6-2-6 2-3 0-4 2-4 4s2 3 4 3h5Z"/>'
+ };
+ return `<svg class="v35-svg" viewBox="0 0 24 24" aria-hidden="true">${paths[type]||paths.fruit}</svg>`;
+};
 const facts=[
- ['↔','COMPRIMENTO','cerca de 100 cm','Da cabeça à ponta da longa cauda.'],
- ['⚖','PESO','aprox. 1,2–1,7 kg','É a maior arara e o maior psitacídeo voador em comprimento.'],
- ['⌖','ONDE VIVE','América do Sul','Três núcleos principais: Pantanal/centro-sul, Brasil central e nordeste do Brasil.'],
- ['●●','SOCIAL','Pares e pequenos grupos','É sociável e comunicativa; pode reunir-se em bandos maiores.'],
- ['♡','VÍNCULO DO CASAL','Pares duradouros','Os casais mantêm forte fidelidade aos locais de alimentação e reprodução.']
+ ['length','COMPRIMENTO','100–130 cm','Incluindo a longa cauda.'],
+ ['weight','PESO','1,2–1,7 kg','Uma das maiores araras do mundo.'],
+ ['location','ONDE VIVE','América do Sul','Brasil, Bolívia e Paraguai.'],
+ ['social','SOCIAL','Pares ou grupos','Casais estáveis e pequenos grupos familiares.'],
+ ['life','LONGEVIDADE','50+ anos','Pode viver várias décadas na natureza.']
 ];
 const diets=[
- ['◉','ACURI','Alimento-chave no Pantanal'],['◉','BOCAIÚVA','Alimento-chave no Pantanal'],['◉','BABAÇU','Consumido noutras regiões'],['◉','INAJÁ','Frutos e sementes de palmeira'],['◉','BURITI','Recurso alimentar regional'],['✿','OUTROS FRUTOS','Complementam a dieta quando disponíveis']
+ ['palm','BABAÇU','Frutos duros de palmeira'],['nut','BOCAIÚVA','Semente importante no Pantanal'],['palm','BURITI','Recurso alimentar regional'],['nut','JATOBÁ','Frutos e sementes'],['fruit','MANGA','Consumida quando disponível'],['flower','FLORES','Complemento ocasional da dieta']
 ];
 const threats=[
- ['TRÁFICO ILEGAL','Captura para o comércio de aves continua a ser uma ameaça.'],['PERDA DE HABITAT','Conversão e fragmentação reduzem áreas de alimentação e reprodução.'],['QUEIMADAS E INCÊNDIOS','Destroem palmeiras, árvores-ninho e áreas de alimentação.'],['PERDA DE ÁRVORES-NINHO','Grandes cavidades adequadas à reprodução são um recurso limitado.'],['ALTERAÇÕES CLIMÁTICAS','Secas e mudanças no regime de fogo podem degradar o habitat.']
+ ['tree','PERDA DE HABITAT','Desmatamento, queimadas e expansão agropecuária reduzem áreas de alimentação e reprodução.'],
+ ['cage','TRÁFICO ILEGAL','A captura para comércio de aves ainda representa pressão sobre populações selvagens.'],
+ ['fire','QUEIMADAS','Incêndios destroem palmeirais, árvores-ninho e recursos alimentares.'],
+ ['palm','FALTA DE ALIMENTO','A redução de palmeiras diminui a disponibilidade de frutos e sementes.'],
+ ['social','PERTURBAÇÃO HUMANA','Ruído, turismo desordenado e alteração das áreas de reprodução podem afetar os casais.']
+];
+const actions=[
+ ['tree','PROTEGER AS FLORESTAS','Preservar palmeirais, matas ciliares e árvores-ninho maduras.'],
+ ['cage','COMBATER O TRÁFICO','Apoiar fiscalização e denunciar captura e comércio ilegal.'],
+ ['social','APOIAR PROJETOS','Fortalecer iniciativas locais de conservação e monitorização.'],
+ ['life','EDUCAÇÃO','Partilhar informação e valorizar comunidades que protegem a espécie.'],
+ ['location','TURISMO RESPONSÁVEL','Observar sem perturbar ninhos, dormitórios ou áreas de alimentação.']
 ];
 function enrich(){
  const root=q('#detailContent'); if(!root||root.dataset.v35==='1')return;
  const title=root.querySelector('.info-title h1'); if(!title||!title.textContent.toUpperCase().includes('ARARA-AZUL-GRANDE'))return;
  root.dataset.v35='1'; root.classList.add('v35-arara');
+ const animalImg=root.querySelector('.animal-visual img'); if(animalImg){animalImg.classList.add('v35-hero-macaw');animalImg.alt='Arara-Azul-Grande — destaque visual'}
  const animal=root.querySelector('#detail-animal .animal-data');
- if(animal){const panel=document.createElement('div');panel.className='v35-facts';panel.innerHTML=`<span class="brush v35-heading">A ARARA EM NÚMEROS</span><div class="v35-facts-grid">${facts.map(f=>`<article>${icon(f[0])}<div><b>${esc(f[1])}</b><strong>${esc(f[2])}</strong><small>${esc(f[3])}</small></div></article>`).join('')}</div>`;animal.insertAdjacentElement('afterend',panel)}
- const ug=root.querySelector('.unique-grid'); if(ug){ug.insertAdjacentHTML('beforeend',`<div class="unique-item v35-extra-trait"><div class="v35-trait-icon">◉</div><div><h4>ANEL AMARELO MARCANTE</h4><p>A pele amarela nua em redor dos olhos e junto à base do bico contrasta fortemente com a plumagem azul-cobalto.</p></div></div>`)}
- const diet=root.querySelector('.diet-card'); if(diet){diet.innerHTML=`<div class="heading"><span class="brush">DIETA: FRUGÍVORA E GRANÍVORA</span></div><h3>Especialista em frutos e sementes de palmeiras</h3><p class="v35-diet-intro">O bico extremamente forte permite abrir sementes muito duras. A dieta varia regionalmente conforme as palmeiras disponíveis.</p><div class="v35-diet-grid">${diets.map(d=>`<article>${icon(d[0])}<b>${esc(d[1])}</b><small>${esc(d[2])}</small></article>`).join('')}</div><div class="v35-eco-note">🌱 Ao deslocar e manipular frutos e sementes, participa nas interações ecológicas das paisagens onde vive.</div>`}
- const middle=root.querySelector('#detail-habitat .middle-grid'); if(middle){middle.insertAdjacentHTML('afterend',`<aside class="v35-didyouknow"><span>VOCÊ SABIA?</span><strong>Um gigante azul com relações ecológicas surpreendentes</strong><p>No Pantanal, a arara-azul-grande nidifica sobretudo em cavidades de grandes árvores. O tucano-toco ajuda a dispersar sementes dessas árvores, embora também possa predar ovos — uma ligação ecológica invulgar.</p></aside>`)}
- const tg=root.querySelector('.threat-grid'); if(tg){tg.innerHTML=threats.map(t=>`<div class="threat-item"><span class="ico">⚠</span><div><b>${esc(t[0])}</b><small>${esc(t[1])}</small></div></div>`).join('')}
- const save=root.querySelector('.save-grid'); if(save){save.insertAdjacentHTML('beforeend',`<div class="save-item"><span class="v35-action-icon">◎</span><b>PROTEGER PALMEIRAS E ÁRVORES-NINHO</b><small>Manter alimento e cavidades de reprodução nas paisagens da espécie.</small></div>`)}
- const closing=root.querySelector('.closing .message'); if(closing)closing.textContent='Proteger a arara-azul-grande exige conservar palmeirais, árvores-ninho e paisagens conectadas, além de combater a captura ilegal.';
+ if(animal){const panel=document.createElement('div');panel.className='v35-facts';panel.innerHTML=`<span class="brush v35-heading">A ARARA EM NÚMEROS</span><div class="v35-facts-grid">${facts.map(f=>`<article><span class="v35-icon">${svg(f[0])}</span><div><b>${esc(f[1])}</b><strong>${esc(f[2])}</strong><small>${esc(f[3])}</small></div></article>`).join('')}</div>`;animal.insertAdjacentElement('afterend',panel)}
+ const ug=root.querySelector('.unique-grid');
+ if(ug){const existing=[...ug.querySelectorAll('.unique-item')];existing.forEach((it,i)=>it.classList.add('v35-trait-'+(i+1)));ug.insertAdjacentHTML('beforeend',`<div class="unique-item v35-extra-trait v35-trait-4"><div class="crop v35-crop-extra"><img src="assets/hyacinth-macaw.jpg" alt="Anel amarelo em redor do olho da arara-azul-grande"></div><div><h4>ANEL AMARELO MARCANTE</h4><p>A pele amarela nua em redor dos olhos e junto à base do bico contrasta fortemente com a plumagem azul-cobalto.</p></div></div>`)}
+ const diet=root.querySelector('.diet-card');
+ if(diet){diet.innerHTML=`<div class="heading"><span class="brush">DIETA: FRUGÍVORA E GRANÍVORA</span></div><h3>Frutos, sementes e castanhas — sobretudo de palmeiras</h3><p class="v35-diet-intro">O enorme bico funciona como uma ferramenta de precisão e força, permitindo abrir frutos que poucos animais conseguem explorar.</p><div class="v35-diet-grid">${diets.map((d,i)=>`<article class="food-${i+1}"><span class="v35-food-art">${svg(d[0])}</span><b>${esc(d[1])}</b><small>${esc(d[2])}</small></article>`).join('')}</div><div class="v35-eco-note"><b>FUNÇÃO ECOLÓGICA</b><span>Ao transportar e manipular frutos, a arara participa na dinâmica das palmeiras e das paisagens onde vive.</span></div>`}
+ const habitat=root.querySelector('.habitat-panel');
+ if(habitat){const band=habitat.querySelector('.habitat-icons');if(band){band.innerHTML=`<div><span>${svg('palm')}</span><b>PALMEIRAIS E MATAS CILIARES</b></div><div><span>${svg('location')}</span><b>ÁGUA PARA BEBER E BANHAR</b></div><div><span>${svg('tree')}</span><b>ÁRVORES GRANDES PARA NIDIFICAR</b></div><div><span>${svg('climate')}</span><b>CLIMA TROPICAL QUENTE</b></div>`}}
+ const middle=root.querySelector('#detail-habitat .middle-grid');
+ if(middle){middle.insertAdjacentHTML('afterend',`<aside class="v35-didyouknow"><div class="v35-fact-mark">?</div><div><span>VOCÊ SABIA?</span><strong>Um casal pode manter o vínculo por muitos anos.</strong><p>As araras-azuis são sociais, comunicativas e formam pares duradouros. No Pantanal, utilizam grandes cavidades de árvores para criar os filhotes e dependem da conservação dessas árvores maduras.</p></div></aside>`)}
+ const tg=root.querySelector('.threat-grid'); if(tg){tg.innerHTML=threats.map(t=>`<div class="threat-item"><span class="ico v35-threat-icon">${svg(t[0])}</span><div><b>${esc(t[1])}</b><small>${esc(t[2])}</small></div></div>`).join('')}
+ const save=root.querySelector('.save-grid'); if(save){save.innerHTML=actions.map(a=>`<div class="save-item"><span class="v35-action-icon">${svg(a[0])}</span><b>${esc(a[1])}</b><small>${esc(a[2])}</small></div>`).join('')}
+ const closing=root.querySelector('.closing .message'); if(closing)closing.textContent='Preservar a arara-azul-grande é proteger os palmeirais, as árvores-ninho e toda a rede de vida que depende destas paisagens.';
 }
 const obs=new MutationObserver(enrich);obs.observe(document.documentElement,{subtree:true,childList:true});
 document.addEventListener('click',()=>setTimeout(enrich,0));setTimeout(enrich,300);
