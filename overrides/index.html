@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css">
   <link rel="stylesheet" href="css/app.css">
-  <link rel="stylesheet" href="css/patch.css">
+  <link rel="stylesheet" href="css/patch.css?v=20260822-2105">
   <link rel="stylesheet" href="css/fixes.css?v=20260822-2054">
 </head>
 <body>
@@ -26,19 +26,56 @@
     </nav>
     <div class="side-stat"><strong id="speciesCount">5</strong><span>espécies nesta versão</span><small>O atlas está preparado para crescer sem limite fixo.</small></div>
   </aside>
+
   <main id="main">
-    <section class="view active" id="view-home"><div class="hero"><div class="hero-copy"><span class="eyebrow">ATLAS VISUAL DA CONSERVAÇÃO</span><h1>CONHECER<br><em>É PROTEGER</em></h1><p>Explore espécies ameaçadas através de fotografias, mapas, infográficos e histórias de conservação.</p><div class="search-wrap"><input id="homeSearch" placeholder="Pesquisar espécie..."><button>⌕</button></div><div class="hero-actions"><button class="primary" data-view="map">Explorar mapa</button><button class="ghost" data-view="list">Ver espécies</button></div></div><div class="hero-animal"><img src="assets/amur-leopard-clean-wide.jpg" alt="Leopardo-de-Amur"><div class="hero-badge"><span>CR</span><b>Leopardo-de-Amur</b><small>Rússia / China</small></div></div></div><div class="section-head"><div><span class="eyebrow">COLEÇÃO INICIAL</span><h2>Espécies em destaque</h2></div><button class="link-btn" data-view="list">Ver todas →</button></div><div class="species-grid" id="featuredGrid"></div></section>
-    <section class="view" id="view-map"><div class="map-screen-head"><h1>MAPA DAS ESPÉCIES</h1><button class="round-info">i</button></div><div class="chips" id="mapChips"></div><div class="map-wrap"><div id="map"></div><button id="mapLocate" class="map-locate" aria-label="Recentrar">◎</button><div class="map-bottom-card" id="mapBottomCard"></div></div></section>
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">ATLAS VISUAL DA CONSERVAÇÃO</span>
+          <h1>CONHECER<br><em>É PROTEGER</em></h1>
+          <p>Explore espécies ameaçadas através de fotografias, mapas, infográficos e histórias de conservação.</p>
+          <div class="search-wrap"><input id="homeSearch" placeholder="Pesquisar espécie..."><button>⌕</button></div>
+          <div class="hero-actions"><button class="primary" data-view="map">Explorar mapa</button><button class="ghost" data-view="list">Ver espécies</button></div>
+        </div>
+        <div class="hero-animal"><img src="assets/amur-leopard-clean-wide.jpg" alt="Leopardo-de-Amur"><div class="hero-badge"><span>CR</span><b>Leopardo-de-Amur</b><small>Rússia / China</small></div></div>
+      </div>
+      <div class="section-head"><div><span class="eyebrow">COLEÇÃO INICIAL</span><h2>Espécies em destaque</h2></div><button class="link-btn" data-view="list">Ver todas →</button></div>
+      <div class="species-grid" id="featuredGrid"></div>
+    </section>
+
+    <section class="view" id="view-map">
+      <div class="map-screen-head"><div><span class="eyebrow">EXPLORAR O PLANETA</span><h1>MAPA DAS ESPÉCIES</h1></div><button class="round-info" id="mapInfoBtn">i</button></div>
+      <div class="map-filter-stack">
+        <div class="map-search-row">
+          <div class="search-wrap map-search"><input id="mapSearch" placeholder="Pesquisar espécie no mapa..."><button>⌕</button></div>
+          <button class="map-reset" id="mapReset">Repor</button>
+        </div>
+        <div class="filter-line"><small>Grupo</small><div class="chips" id="mapChips"></div></div>
+        <div class="filter-line"><small>Estado</small><div class="chips" id="statusChips"></div></div>
+        <div class="filter-line"><small>Região</small><div class="chips" id="regionChips"></div></div>
+        <div class="map-summary"><span id="mapVisibleCount">5 espécies visíveis</span><span class="map-legend-inline"><i class="dot cr"></i> CR <i class="dot vu"></i> VU</span></div>
+      </div>
+      <div class="map-wrap">
+        <div id="map"></div>
+        <div class="map-legend" id="mapLegend"><b>Legenda</b><span><i class="dot cr"></i> Em perigo crítico</span><span><i class="dot vu"></i> Vulnerável</span><small>Os números agrupam espécies próximas. Toque para aproximar.</small></div>
+        <button id="mapLocate" class="map-locate" aria-label="Recentrar">◎</button>
+        <div class="map-bottom-card" id="mapBottomCard"></div>
+      </div>
+    </section>
+
     <section class="view" id="view-list"><div class="view-title"><div><span class="eyebrow">BIBLIOTECA</span><h1>Lista de espécies</h1></div><span class="count-pill" id="listCount"></span></div><div class="list-tools"><div class="search-wrap"><input id="listSearch" placeholder="Pesquisar espécie..."><button>⌕</button></div><select id="statusFilter"><option value="">Todos os estados</option><option value="CR">Em perigo crítico</option><option value="VU">Vulnerável</option></select></div><div class="species-list" id="speciesList"></div></section>
     <section class="view" id="view-favorites"><div class="view-title"><div><span class="eyebrow">A SUA COLEÇÃO</span><h1>Favoritos</h1></div></div><div class="species-grid" id="favoritesGrid"></div></section>
     <section class="view" id="view-about"><div class="about-page"><span class="eyebrow">SOBRE</span><h1>Um atlas visual para explorar e proteger.</h1><p class="lede">A aplicação combina a leitura de um infográfico editorial com uma exploração por lista e mapa. A arquitetura está preparada para receber muito mais do que 100 espécies.</p></div></section>
     <section class="view" id="view-detail"><div class="detail-toolbar"><button class="back-btn" id="detailBack">← Voltar</button><div class="detail-section-nav" id="detailSectionNav"></div></div><div id="detailContent"></div></section>
   </main>
+
   <nav class="bottom-nav"><button data-view="home" class="active"><span>⌂</span><small>Início</small></button><button data-view="map"><span>⌖</span><small>Mapa</small></button><button data-view="list"><span>☷</span><small>Lista</small></button><button data-view="favorites"><span>♡</span><small>Favoritos</small></button><button data-view="about"><span>•••</span><small>Mais</small></button></nav>
+
+  <div class="image-modal" id="imageModal" aria-hidden="true"><button class="image-modal-close" id="imageModalClose" aria-label="Fechar">×</button><div class="image-modal-stage" id="imageModalStage"><img id="imageModalImg" alt=""><div class="image-modal-caption" id="imageModalCaption"></div></div></div>
 </div>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-<script type="module" src="js/app.js"></script>
+<script type="module" src="js/app.js?v=20260822-2105"></script>
 <script src="js/fixes.js?v=20260822-2054" defer></script>
 </body>
 </html>
