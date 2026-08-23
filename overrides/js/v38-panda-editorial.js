@@ -1,0 +1,47 @@
+(()=>{
+const q=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+const AMUR='assets/generated-v34/amur-leopard/';
+const HERO='assets/giant-panda.jpg';
+const HAB='assets/habitat-sichuan-bamboo-display.jpg';
+const traits=[
+ ['assets/traits/giant-panda-1.jpg','POLEGAR “FALSO”','Um osso do pulso alongado funciona como um polegar e permite agarrar caules de bambu.'],
+ ['assets/traits/giant-panda-2.jpg','MANCHAS ICÓNICAS','As áreas negras em redor dos olhos, orelhas e membros formam um padrão imediatamente reconhecível.'],
+ ['assets/traits/giant-panda-3.jpg','PELO ESPESSO','A pelagem densa e impermeável ajuda a suportar o frio e a humidade das montanhas.'],
+ [HERO,'BEBÉS MUITO PEQUENOS','As crias nascem minúsculas, cegas e rosadas, extremamente dependentes da mãe.']
+];
+const facts=[
+ ['1 860','INDIVÍDUOS NA NATUREZA','estimativa de referência'],
+ ['99%','DA DIETA É BAMBU','especialização extrema'],
+ ['12–38 kg','DE BAMBU POR DIA','consumo muito elevado'],
+ ['10–16 h','A ALIMENTAR-SE','grande parte do dia'],
+ ['1 200–3 500 m','ALTITUDE TÍPICA','florestas montanhosas']
+];
+const diet=[
+ ['leaf','FOLHAS','Folhas jovens e maduras'],['stem','CAULES','Partes fibrosas do bambu'],['shoot','REBENTOS','Muito nutritivos na época certa'],['branch','RAMOS','Consumidos regularmente'],['flower','FLORES','Ocasionalmente disponíveis']
+];
+const threats=[
+ ['tree','PERDA E FRAGMENTAÇÃO','Estradas, agricultura e desflorestação isolam manchas de floresta.'],
+ ['bamboo','ESCASSEZ DE BAMBU','Alterações climáticas e ciclos naturais podem reduzir o alimento disponível.'],
+ ['dna','BAIXA TAXA REPRODUTIVA','As fêmeas reproduzem-se lentamente e crias gémeas raramente sobrevivem ambas.'],
+ ['trap','CAÇA ILEGAL','Armadilhas destinadas a outros animais continuam a representar risco.'],
+ ['climate','MUDANÇAS CLIMÁTICAS','O deslocamento das faixas de bambu pode tornar habitats atuais inadequados.']
+];
+function svg(k){const p={leaf:'<path d="M4 18C5 8 12 4 20 4c0 8-4 15-14 16"/><path d="M6 18c4-4 7-7 12-11"/>',stem:'<path d="M8 3v18M16 3v18M5 8h14M5 15h14"/>',shoot:'<path d="M7 20c1-8 3-13 5-17 3 5 5 10 5 17Z"/><path d="M8 15h8M9 10h6"/>',branch:'<path d="M4 19 20 5M8 15 5 10M12 11l1-6M15 8l4 2"/>',flower:'<circle cx="12" cy="12" r="2"/><circle cx="12" cy="6" r="4"/><circle cx="18" cy="12" r="4"/><circle cx="12" cy="18" r="4"/><circle cx="6" cy="12" r="4"/>',tree:'<path d="M12 3 7 11h3l-4 6h4v4h4v-4h4l-4-6h3Z"/>',bamboo:'<path d="M8 3v18M16 3v18M6 8h4M14 12h4M6 16h4"/><path d="M8 7 4 5M16 10l4-3"/>',dna:'<path d="M7 3c10 5 10 13 0 18M17 3C7 8 7 16 17 21M8 7h8M8 12h8M8 17h8"/>',trap:'<rect x="5" y="6" width="14" height="14" rx="2"/><path d="M8 6V4m8 2V4M8 10v7m4-7v7m4-7v7"/>',climate:'<circle cx="8" cy="8" r="3"/><path d="M8 1v2M1 8h2m10 0h2"/><path d="M14 21c4 0 7-2 7-5s-3-5-6-4c-1-3-6-2-6 2-3 0-4 2-4 4s2 3 4 3Z"/>'};return `<svg viewBox="0 0 24 24" aria-hidden="true">${p[k]||p.leaf}</svg>`}
+function sharedIcon(holder,file,alt){if(holder)holder.innerHTML=`<img class="v38-shared-icon" src="${AMUR}${file}" alt="${alt}">`}
+function apply(){
+ const root=q('#detailContent'); if(!root)return;
+ const title=root.querySelector('.info-title h1'); if(!title||!title.textContent.toUpperCase().includes('PANDA-GIGANTE'))return;
+ const info=root.querySelector('.infographic'); if(!info||info.dataset.pandaV38==='1')return;
+ info.dataset.pandaV38='1'; info.classList.add('v38-panda');
+ const stats=[...root.querySelectorAll('.stats-column .stat .ico')];sharedIcon(stats[0],'pop-estimada.webp','População estimada');sharedIcon(stats[1],'status.webp','Estado de conservação');sharedIcon(stats[2],'location.webp','Localização');
+ const hero=root.querySelector('.animal-visual img'); if(hero){hero.src=HERO;hero.alt='Panda-Gigante';hero.classList.add('v38-panda-hero')}
+ const animalData=root.querySelector('#detail-animal .animal-data'); if(animalData&&!root.querySelector('.v38-panda-facts'))animalData.insertAdjacentHTML('afterend',`<section class="v38-panda-facts">${facts.map(f=>`<article><strong>${esc(f[0])}</strong><b>${esc(f[1])}</b><small>${esc(f[2])}</small></article>`).join('')}</section>`);
+ const unique=root.querySelector('.unique-grid'); if(unique){unique.innerHTML=traits.map((t,i)=>`<div class="unique-item v38-panda-trait t${i+1}"><div class="crop"><img src="${t[0]}" alt="${esc(t[1])}"></div><div><h4>${esc(t[1])}</h4><p>${esc(t[2])}</p></div></div>`).join('')}
+ const habitat=root.querySelector('.habitat-panel'); if(habitat){const im=habitat.querySelector('.habitat-image img');if(im){im.src=HAB;im.alt='Floresta montanhosa de bambu na China'}const ht=habitat.querySelector('.habitat-title');if(ht)ht.textContent='HABITAT: FLORESTAS DE BAMBU';const icons=habitat.querySelector('.habitat-icons');if(icons)icons.innerHTML=`<div><span>${svg('bamboo')}</span><b>FLORESTAS DE BAMBU</b></div><div><span>${svg('tree')}</span><b>ALTITUDE 1.200–3.500 M</b></div><div><span>${svg('climate')}</span><b>CLIMA FRIO E HÚMIDO</b></div>`}
+ const dietCard=root.querySelector('.diet-card'); if(dietCard)dietCard.innerHTML=`<div class="heading"><span class="brush">DIETA: 99% BAMBU</span></div><p class="v38-diet-lede">Apesar de ser um mamífero carnívoro por ancestralidade, o panda evoluiu para uma dieta quase exclusivamente herbívora.</p><div class="v38-diet-grid">${diet.map(d=>`<article><span>${svg(d[0])}</span><b>${d[1]}</b><small>${d[2]}</small></article>`).join('')}</div><div class="v38-diet-numbers"><b>12–38 kg <small>por dia</small></b><b>10–16 horas <small>de alimentação</small></b><b>~17% <small>dos nutrientes aproveitados</small></b></div>`;
+ const mid=root.querySelector('#detail-habitat .middle-grid'); if(mid&&!root.querySelector('.v38-panda-story'))mid.insertAdjacentHTML('afterend','<aside class="v38-panda-story"><span>VOCÊ SABIA?</span><strong>O “polegar” do panda não é realmente um dedo.</strong><p>É um osso do pulso modificado que atua como uma pinça contra os restantes dedos, permitindo segurar o bambu com enorme precisão.</p></aside>');
+ const tg=root.querySelector('.threat-grid');if(tg)tg.innerHTML=threats.map(t=>`<div class="threat-item"><span class="ico v38-threat">${svg(t[0])}</span><div><b>${esc(t[1])}</b><small>${esc(t[2])}</small></div></div>`).join('');
+ const closing=root.querySelector('.closing .message');if(closing)closing.textContent='Cuidar do panda-gigante é proteger as florestas de bambu, os corredores montanhosos e toda a biodiversidade que depende deles.';
+}
+const obs=new MutationObserver(()=>requestAnimationFrame(apply)); const start=()=>{const d=q('#detailContent');if(d)obs.observe(d,{childList:true,subtree:true});apply()};document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();document.addEventListener('click',()=>setTimeout(apply,0));
+})();
