@@ -1,9 +1,9 @@
-const CACHE='em-perigo-v3-4-20260822';
+const CACHE='em-perigo-v3-4-2-20260822';
 self.addEventListener('install',e=>self.skipWaiting());
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',e=>{
   const u=new URL(e.request.url);
-  const fresh=e.request.mode==='navigate'||/\.(?:js|css|json|html|svg)$/.test(u.pathname);
+  const fresh=e.request.mode==='navigate'||/\.(?:js|css|json|html|svg|webp)$/.test(u.pathname);
   if(fresh){
     e.respondWith(fetch(e.request,{cache:'no-store'}).then(r=>{const c=r.clone();caches.open(CACHE).then(x=>x.put(e.request,c));return r}).catch(()=>caches.match(e.request)));
     return;
