@@ -54,16 +54,16 @@
   };
   const applyAmur=()=>{
     const d=document.getElementById('detailContent');if(!d||d.querySelector('.info-title h1')?.textContent?.trim()!=='Leopardo-de-Amur')return;
-    const info=d.querySelector('.infographic');if(!info)return;info.dataset.aiInfographic='1';info.dataset.aiSpecies='amur-leopard';
+    const info=d.querySelector('.infographic');if(!info||info.dataset.amurAssetsApplied==='1')return;
+    info.dataset.amurAssetsApplied='1';
+    info.dataset.aiInfographic='1';info.dataset.aiSpecies='amur-leopard';
     swap(d.querySelector('.animal-visual img'),ASSET+'animal.webp','Leopardo-de-Amur — visual central fotorrealista gerado');
     d.querySelector('.animal-visual .ai-hero-placeholder')?.remove();
     const traits=[...d.querySelectorAll('.unique-item .crop img')];for(let i=0;i<3;i++)swap(traits[i],ASSET+`trait-${i+1}.webp`,`Leopardo-de-Amur — característica ${i+1}`);
     const diets=[...d.querySelectorAll('.diet-item>span')];for(let i=0;i<4;i++){if(!diets[i])continue;const label=d.querySelectorAll('.diet-item b')[i]?.textContent||'Dieta';diets[i].innerHTML=`<img class="zoomable-image" src="${ASSET}diet-${i+1}.webp" alt="${label}">`;diets[i].classList.remove('ai-slot-missing')}
-
     const stats=[...d.querySelectorAll('.stats-column .stat .ico')];setIcon(stats[0],'pop-estimada.webp','População estimada');setIcon(stats[1],'status.webp','Estado de conservação');setIcon(stats[2],'location.webp','Localização');
     const habitatIcons=[...d.querySelectorAll('.habitat-icons>div>span')];setIcon(habitatIcons[0],'habitat-1.webp','Florestas temperadas');setIcon(habitatIcons[1],'habitat-2.webp','Invernos frios');setIcon(habitatIcons[2],'habitat-3.webp','Terreno montanhoso');
     const threats=[...d.querySelectorAll('.threat-item .ico')];for(let i=0;i<4;i++)setIcon(threats[i],`threat-${i+1}.webp`,`Ameaça ${i+1}`);
-
     swap(d.querySelector('.habitat-image img'),ASSET+'habitat-generated.webp','Habitat do Leopardo-de-Amur — floresta temperada montanhosa no inverno');
     applyWhereArt(d);
     const finalPhoto=d.querySelector('.closing .polaroid img');if(finalPhoto){swap(finalPhoto,ASSET+'animal-final.webp','Leopardo-de-Amur na neve — imagem final');finalPhoto.dataset.realWebPhoto='1'}
