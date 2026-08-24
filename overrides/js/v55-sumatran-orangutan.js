@@ -1,7 +1,7 @@
 (()=>{
   const NAME='ORANGOTANGO-DE-SUMATRA';
   const COMMONS='https://commons.wikimedia.org/wiki/Special:FilePath/';
-  const HERO='assets/generated-v55/sumatran-orangutan/animal.webp';
+  const HERO='assets/generated-v55/sumatran-orangutan/animal.png';
   const HABITAT=COMMONS+encodeURIComponent('Orang utan sumatra.jpg');
   const DIET=[
     [COMMONS+encodeURIComponent('Ficus racemosa fruits.jpg'),'FIGOS E FRUTOS','Base energética'],
@@ -22,7 +22,7 @@
     const root=document.getElementById('detailContent'); if(!isSpecies(root)) return;
     const info=root.querySelector('.infographic'); info?.classList.add('v40-engine','v55-sumatran-orangutan');
     const hero=root.querySelector('.animal-visual img');
-    if(hero){hero.src=HERO;hero.alt='Orangotango-de-Sumatra';hero.dataset.v55='hero';hero.classList.add('v40-hero');hero.style.objectFit='contain';hero.style.objectPosition='center bottom';}
+    if(hero){hero.src=HERO;hero.alt='Orangotango-de-Sumatra';hero.dataset.v55='hero';hero.classList.add('v40-hero','zoomable-image');hero.style.objectFit='contain';hero.style.objectPosition='center bottom';}
     const traitCfg=[
       ['BRAÇOS MUITO LONGOS','Braços poderosos e muito compridos permitem deslocar-se entre as copas sem descer ao solo.','50% 50%','1.55'],
       ['PELAGEM RUIVA','A pelagem longa e avermelhada distingue imediatamente este grande primata de Sumatra.','42% 42%','2.35'],
@@ -30,12 +30,12 @@
       ['MÃOS PREÊNSEIS','Mãos e pés fortes agarram ramos com precisão e sustentam a vida quase exclusivamente arborícola.','45% 78%','2.45']
     ];
     const grid=root.querySelector('.unique-grid');
-    if(grid){grid.innerHTML=traitCfg.map(c=>`<div class="unique-item v40-trait"><div class="crop"><img src="${HERO}" alt="${c[0]}" style="width:100%!important;height:100%!important;object-fit:cover!important;object-position:${c[2]}!important;transform:scale(${c[3]})!important;transform-origin:${c[2]}!important"></div><div><h4>${c[0]}</h4><p>${c[1]}</p></div></div>`).join('');}
+    if(grid){grid.innerHTML=traitCfg.map(c=>`<div class="unique-item v40-trait"><div class="crop"><img class="zoomable-image" src="${HERO}" alt="${c[0]}" style="width:100%!important;height:100%!important;object-fit:cover!important;object-position:${c[2]}!important;transform:scale(${c[3]})!important;transform-origin:${c[2]}!important"></div><div><h4>${c[0]}</h4><p>${c[1]}</p></div></div>`).join('');}
     const habitat=root.querySelector('.habitat-card img,.habitat-photo img'); if(habitat){habitat.src=HABITAT;habitat.alt='Floresta tropical de Sumatra, habitat do orangotango-de-Sumatra';}
     const card=root.querySelector('.where-card');
     if(card){let map=card.querySelector('img');const dyn=card.querySelector('.leaflet-container,#speciesRangeMap,.species-range-map');if(dyn&&dyn.tagName!=='IMG'){map=document.createElement('img');dyn.replaceWith(map);}if(map){map.src=MAP;map.alt='Mapa editorial da distribuição do Orangotango-de-Sumatra';map.className='v43-static-map zoomable-image';Object.assign(map.style,{display:'block',width:'100%',height:'auto',maxHeight:'none',aspectRatio:'auto',objectFit:'contain',objectPosition:'center'});}}
     const dietCard=root.querySelector('.v40-diet-card,.diet-card');
-    if(dietCard){dietCard.innerHTML=`<div class="heading"><span class="brush">DIETA: PRINCIPALMENTE FRUGÍVORA</span></div><p class="v40-diet-intro">Frutos formam a maior parte da dieta quando disponíveis; folhas, rebentos, casca e insetos complementam a alimentação.</p><div class="v40-diet-grid">${DIET.map(d=>`<article><img src="${d[0]}" alt="${d[1]}" loading="lazy" referrerpolicy="no-referrer"><b>${d[1]}</b><small>${d[2]}</small></article>`).join('')}</div>`;}
+    if(dietCard){dietCard.innerHTML=`<div class="heading"><span class="brush">DIETA: PRINCIPALMENTE FRUGÍVORA</span></div><p class="v40-diet-intro">Frutos formam a maior parte da dieta quando disponíveis; folhas, rebentos, casca e insetos complementam a alimentação.</p><div class="v40-diet-grid">${DIET.map(d=>`<article><img class="zoomable-image" src="${d[0]}" alt="${d[1]}" loading="lazy" referrerpolicy="no-referrer"><b>${d[1]}</b><small>${d[2]}</small></article>`).join('')}</div>`;}
   }
   function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(apply);}
   function start(){const root=document.getElementById('detailContent');if(root)new MutationObserver(schedule).observe(root,{childList:true,subtree:true});document.addEventListener('click',()=>setTimeout(schedule,0),true);schedule();}
