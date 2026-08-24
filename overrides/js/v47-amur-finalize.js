@@ -1,8 +1,8 @@
 (()=>{
   const ROOT='assets/generated-v34/amur-leopard/';
-  const HERO=ROOT+'animal.webp?v=4.3.6';
-  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.6';
-  const STAMP='amur-leopard:v430';
+  const HERO=ROOT+'animal.webp?v=4.3.9';
+  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.9';
+  const STAMP='amur-leopard:v439';
   let scheduled=false;
 
   function isLeopard(root){
@@ -14,13 +14,21 @@
     const root=document.getElementById('detailContent');
     if(!isLeopard(root)) return;
 
+    /* IMPORTANT: this finalizer must not set data-v43-engine.
+       That marker belongs to the common species renderer; setting it here
+       made v40 believe the leopard had already been rendered, so its
+       responsive classes, trait assets and diet layout never ran. */
     const info=root.querySelector('.infographic');
-    if(info) info.dataset.v43Engine=STAMP;
+    if(info){
+      info.dataset.v47Finalized=STAMP;
+      info.classList.add('v40-engine','v40-amur-leopard');
+    }
 
     const hero=root.querySelector('.animal-visual img');
     if(hero && hero.getAttribute('src')!==HERO){
       hero.src=HERO;
       hero.alt='Leopardo-de-Amur';
+      hero.classList.add('v40-hero');
       hero.style.objectFit='contain';
       hero.style.objectPosition='center bottom';
     }
