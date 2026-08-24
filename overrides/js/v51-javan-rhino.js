@@ -1,4 +1,23 @@
 (()=>{
+  // Global iPhone/iPad navigation guard. Leaflet is reserved for the global
+  // Map view; species sheets use static WEBP maps only.
+  if(window.L&&L.map&&!L.__atlasStaticDetailMapPatch){
+    const realMap=L.map.bind(L);
+    L.__atlasStaticDetailMapPatch=true;
+    L.map=function(target,options){
+      const id=typeof target==='string'?target:target?.id;
+      if(id!=='speciesRangeMap')return realMap(target,options);
+      return {setView(){return this},fitBounds(){return this},invalidateSize(){return this},addLayer(){return this},removeLayer(){return this},addControl(){return this},removeControl(){return this},on(){return this},off(){return this},whenReady(fn){if(typeof fn==='function')fn();return this},remove(){return this},getContainer(){return document.getElementById('speciesRangeMap')}};
+    };
+  }
+  document.addEventListener('click',e=>{
+    if(!e.target.closest('#detailBack,[data-view]'))return;
+    document.body.classList.remove('modal-open');
+    const modal=document.getElementById('imageModal');
+    if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true')}
+    if(e.target.closest('#detailBack'))document.getElementById('mapBottomCard')?.classList.remove('show');
+  },true);
+
   const NAME='RINOCERONTE-DE-JAVA';
   const HERO_B64='assets/generated-v52/javan-rhino/animal.webp.b64';
   const MAP='assets/generated-v43/javan-rhino/map_range.webp?v=4.3.16';
@@ -92,7 +111,6 @@
       img.style.setProperty('object-fit','contain','important');
     });
 
-    // Complete the herbivorous diet with reliable photographic sources.
     root.querySelectorAll('.v40-diet-grid article').forEach(article=>{
       const label=article.querySelector('b')?.textContent?.trim().toUpperCase();
       const img=article.querySelector('img');
@@ -102,19 +120,13 @@
     });
   }
 
-  function schedule(){
-    if(scheduled) return;
-    scheduled=true;
-    requestAnimationFrame(()=>apply().catch(console.error));
-  }
-
+  function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>apply().catch(console.error))}
   function start(){
     const root=document.getElementById('detailContent');
-    if(root) new MutationObserver(schedule).observe(root,{childList:true,subtree:true});
+    if(root)new MutationObserver(schedule).observe(root,{childList:true,subtree:true});
     document.addEventListener('click',()=>setTimeout(schedule,0),true);
     window.addEventListener('resize',schedule,{passive:true});
     schedule();
   }
-
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();
 })();
