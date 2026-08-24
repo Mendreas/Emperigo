@@ -1,0 +1,38 @@
+/* v59 — common animal.webp positioning fix
+   Keep editorial animal images centered vertically and horizontally inside their panel.
+   This applies to the common renderer only; no species-specific patching. */
+
+.generic-species-detail .animal-visual,
+.v40-engine .animal-visual {
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+
+.generic-species-detail .animal-visual > img,
+.generic-species-detail .generic-animal-image,
+.v40-engine .animal-visual > img,
+.v40-engine .v40-hero {
+  display:block !important;
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+  margin:auto !important;
+}
+
+@media (max-width:700px){
+  .generic-species-detail .animal-data > .animal-visual,
+  .v40-engine .animal-data > .animal-visual {
+    align-self:center !important;
+  }
+
+  .generic-species-detail .animal-data > .animal-visual > img,
+  .v40-engine .animal-data > .animal-visual > img {
+    object-position:center center !important;
+  }
+}
