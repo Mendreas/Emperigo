@@ -1,9 +1,9 @@
 (()=>{
   const NAME='TIGRE-DE-SUMATRA';
   const ROOT='assets/generated-v50/sumatran-tiger/';
-  const HERO_B64=ROOT+'animal.webp.b64';
-  const MAP_B64=ROOT+'map_range.webp.b64';
-  const MONKEY='https://commons.wikimedia.org/wiki/Special:FilePath/Southern%20Pig-tailed%20Macaque.jpg';
+  const HERO_B64=ROOT+'animal.webp.b64?v=4.3.14';
+  const MAP_B64=ROOT+'map_range.webp.b64?v=4.3.14';
+  const MONKEY='https://upload.wikimedia.org/wikipedia/commons/4/4f/Southern_Pig-tailed_Macaque.jpg';
   const cache=new Map();
   let scheduled=false;
 
@@ -40,11 +40,13 @@
       hero.style.objectPosition='center bottom';
     }
 
+    /* As características usam deliberadamente a mesma fotografia editorial,
+       mas com enquadramentos/zooms diferentes para mostrar a característica. */
     const traits=[...root.querySelectorAll('.unique-grid .unique-item')].slice(0,3);
     const cfg=[
       ['RISCAS DENSAS','As riscas estreitas e próximas ajudam a quebrar a silhueta na floresta tropical.','50% 20%','2.45'],
-      ['BARBATANAS FACIAIS','Os pelos faciais longos reforçam a expressão e ajudam na perceção tátil de curta distância.','50% 39%','2.7'],
-      ['PATAS PODEROSAS','Patas dianteiras robustas favorecem deslocação silenciosa, saltos e ataques curtos.','37% 88%','2.8']
+      ['BARBATANAS FACIAIS','Os pelos faciais longos reforçam a expressão e ajudam na perceção tátil de curta distância.','50% 39%','2.70'],
+      ['PATAS PODEROSAS','Patas dianteiras robustas favorecem deslocação silenciosa, saltos e ataques curtos.','37% 88%','2.80']
     ];
     traits.forEach((item,i)=>{
       const img=item.querySelector('.crop img');
@@ -66,6 +68,7 @@
 
     const card=root.querySelector('.where-card');
     if(card){
+      /* O novo WEBP já inclui o título editorial ONDE VIVE?. */
       card.querySelector(':scope > .heading')?.remove();
       let map=card.querySelector('img.v43-static-map,img.v47-amur-map,img');
       const dynamic=card.querySelector('.leaflet-container,#speciesRangeMap,.species-range-map');
@@ -75,7 +78,7 @@
       }
       if(map){
         map.src=mapUrl;
-        map.alt='Mapa editorial da localização do Tigre-de-Sumatra';
+        map.alt='Mapa editorial da localização do Tigre-de-Sumatra em Sumatra, Indonésia';
         map.dataset.v50Tiger='map';
         map.className='v43-static-map zoomable-image';
         map.style.display='block';
@@ -92,7 +95,7 @@
     [...root.querySelectorAll('.v40-diet-grid article')].forEach(article=>{
       if(article.querySelector('b')?.textContent?.trim().toUpperCase()==='MACACOS'){
         const img=article.querySelector('img');
-        if(img && !img.src.includes('Southern%20Pig-tailed%20Macaque.jpg')){
+        if(img && img.getAttribute('src')!==MONKEY){
           img.src=MONKEY;
           img.alt='Macaco-de-cauda-de-porco';
           img.referrerPolicy='no-referrer';
