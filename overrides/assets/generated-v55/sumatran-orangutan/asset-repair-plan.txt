@@ -1,1 +1,0 @@
-Replace the broken textual image placeholder with the binary Git blob already created for the generated orangutan image, then remove this marker.
