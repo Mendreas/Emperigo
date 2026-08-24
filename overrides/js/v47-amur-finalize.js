@@ -1,12 +1,32 @@
 (()=>{
   const ROOT='assets/generated-v34/amur-leopard/';
-  const HERO=ROOT+'animal.webp?v=4.3.11';
-  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.11';
-  const STAMP='amur-leopard:v4311';
+  const HERO=ROOT+'animal.webp?v=4.3.12';
+  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.12';
+  const TRAITS=[
+    ROOT+'trait-1.webp?v=4.3.12',
+    ROOT+'trait-2.webp?v=4.3.12',
+    ROOT+'trait-3.webp?v=4.3.12'
+  ];
+  const STAMP='amur-leopard:v4312';
   let scheduled=false;
 
   function isLeopard(root){
     return root?.querySelector('.info-title h1')?.textContent?.trim().toUpperCase()==='LEOPARDO-DE-AMUR';
+  }
+
+  function enforceTraitAssets(root){
+    const traitImgs=[...root.querySelectorAll('.unique-grid .unique-item img')];
+    TRAITS.forEach((src,i)=>{
+      const img=traitImgs[i];
+      if(!img) return;
+      if(img.getAttribute('src')!==src) img.src=src;
+      img.alt=['Rosetas espaçadas do Leopardo-de-Amur','Olhos do Leopardo-de-Amur','Patas largas do Leopardo-de-Amur'][i];
+      img.style.setProperty('width','100%','important');
+      img.style.setProperty('height','100%','important');
+      img.style.setProperty('object-fit','cover','important');
+      img.style.setProperty('object-position','center','important');
+      img.style.setProperty('transform','none','important');
+    });
   }
 
   function applyMobileAnimalLayout(root){
@@ -17,8 +37,6 @@
 
     if(!window.matchMedia('(max-width:700px)').matches) return;
 
-    /* Intro is a full-width row. Stats stay together as one left column,
-       while the editorial animal occupies the right column. */
     const intro=stats.querySelector('.intro');
     if(intro && intro.parentElement===stats){
       intro.classList.add('v47-amur-mobile-intro');
@@ -41,9 +59,6 @@
       movedIntro.style.setProperty('margin','0 0 18px','important');
     }
 
-    /* Critical fix: do NOT use display:contents here.  That made each .stat
-       a grid item and allowed the image to occupy only the first statistic's
-       row, pushing CR and Ásia underneath it. */
     stats.style.setProperty('display','flex','important');
     stats.style.setProperty('flex-direction','column','important');
     stats.style.setProperty('justify-content','space-between','important');
@@ -103,6 +118,7 @@
       hero.style.objectPosition='center center';
     }
 
+    enforceTraitAssets(root);
     applyMobileAnimalLayout(root);
 
     const card=root.querySelector('.where-card');
@@ -148,7 +164,7 @@
   function start(){
     const root=document.getElementById('detailContent');
     if(!root) return;
-    new MutationObserver(schedule).observe(root,{childList:true,subtree:true});
+    new MutationObserver(schedule).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});
     window.addEventListener('resize',schedule,{passive:true});
     schedule();
   }
