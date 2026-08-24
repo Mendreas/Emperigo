@@ -1,32 +1,58 @@
 (()=>{
   const detail=()=>document.getElementById('detailContent');
   const modal=()=>document.getElementById('imageModal');
+  let suppressUntil=0;
 
-  function closeModal(e){
-    if(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation?.();}
+  function finishClose(){
     const m=modal();
     if(!m)return;
-    m.classList.remove('open');
+    m.classList.remove('open','v53-closing');
     m.setAttribute('aria-hidden','true');
     document.body.classList.remove('modal-open');
     const img=document.getElementById('imageModalImg');
     if(img) img.removeAttribute('src');
   }
 
-  // iOS/Safari: make the close control independent of any later listeners.
-  ['pointerup','click','touchend'].forEach(type=>document.addEventListener(type,e=>{
-    if(e.target.closest('#imageModalClose')) closeModal(e);
+  function closeModal(e){
+    if(e){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation?.();}
+    const m=modal();
+    if(!m)return;
+    suppressUntil=Date.now()+450;
+    // iOS can dispatch a synthetic click after touch/pointer release.  Keep an
+    // invisible shield alive briefly so that click cannot land on the image
+    // underneath and immediately reopen the lightbox.
+    m.classList.add('v53-closing');
+    m.style.setProperty('opacity','0','important');
+    m.style.setProperty('pointer-events','auto','important');
+    document.body.classList.remove('modal-open');
+    window.setTimeout(()=>{
+      m.style.removeProperty('opacity');
+      m.style.removeProperty('pointer-events');
+      finishClose();
+    },360);
+  }
+
+  function isCloseControl(e){
+    const path=typeof e.composedPath==='function'?e.composedPath():[];
+    return path.some(n=>n?.id==='imageModalClose') || (e.target instanceof Element && !!e.target.closest('#imageModalClose'));
+  }
+
+  // Use pointerdown/touchstart, not release: Safari sometimes sends a second
+  // synthetic click after touchend.  The shield above absorbs that click.
+  ['pointerdown','touchstart','mousedown'].forEach(type=>document.addEventListener(type,e=>{
+    if(isCloseControl(e)) closeModal(e);
   },true));
 
-  // Also keep tapping the dark backdrop as a reliable escape route.
+  // Keyboard/mouse accessibility fallback.
   document.addEventListener('click',e=>{
-    if(e.target.id==='imageModal'||e.target.id==='imageModalStage') closeModal(e);
+    if(Date.now()<suppressUntil){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation?.();return;}
+    if(isCloseControl(e)||e.target.id==='imageModal'||e.target.id==='imageModalStage') closeModal(e);
   },true);
 
   // Remove the previous species DOM before app.js builds the next sheet. This
   // prevents Safari from retaining the last decoded animal for one paint frame.
   document.addEventListener('pointerdown',e=>{
-    const trigger=e.target.closest('.species-card[data-id],.list-row[data-id],#mapBottomCard');
+    const trigger=e.target instanceof Element?e.target.closest('.species-card[data-id],.list-row[data-id],#mapBottomCard'):null;
     if(!trigger)return;
     const d=detail();
     if(d) d.replaceChildren();
@@ -68,15 +94,25 @@
       img.style.setProperty('opacity','1','important');
     };
     if(img.complete&&img.naturalWidth>0){
-      img.decode?.().then(reveal).catch(reveal) || reveal();
+      const decoded=img.decode?.();
+      if(decoded&&typeof decoded.then==='function')decoded.then(reveal).catch(reveal);else reveal();
     }else{
-      img.addEventListener('load',()=>{img.decode?.().then(reveal).catch(reveal)||reveal()},{once:true});
+      img.addEventListener('load',()=>{
+        const decoded=img.decode?.();
+        if(decoded&&typeof decoded.then==='function')decoded.then(reveal).catch(reveal);else reveal();
+      },{once:true});
     }
   }
 
   function start(){
     const d=detail();
     if(d)new MutationObserver(settleHero).observe(d,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});
+    const x=document.getElementById('imageModalClose');
+    if(x){
+      x.style.setProperty('pointer-events','auto','important');
+      x.style.setProperty('touch-action','manipulation','important');
+      x.style.setProperty('-webkit-user-select','none','important');
+    }
     settleHero();
   }
   document.readyState==='loading'?document.addEventListener('DOMContentLoaded',start):start();
