@@ -1,24 +1,37 @@
 (()=>{
   const NAME='RINOCERONTE-DE-JAVA';
-  const HERO='assets/generated-v43/javan-rhino/animal_main.webp?v=4.3.15';
-  const MAP='assets/generated-v43/javan-rhino/map_range.webp?v=4.3.15';
+  const HERO_B64='assets/generated-v52/javan-rhino/animal.webp.b64';
+  const MAP='assets/generated-v43/javan-rhino/map_range.webp?v=4.3.16';
+  const LEAVES='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Tropicalleaves.jpg/960px-Tropicalleaves.jpg';
+  const BRANCHES='https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/Tree_branches_with_some_leaves.jpg/960px-Tree_branches_with_some_leaves.jpg';
   let scheduled=false;
+  let heroUrl='';
 
   function isRhino(root){
     return root?.querySelector('.info-title h1')?.textContent?.trim().toUpperCase()===NAME;
   }
 
-  function apply(){
+  async function getHero(){
+    if(heroUrl)return heroUrl;
+    const b64=(await fetch(HERO_B64,{cache:'no-store'}).then(r=>r.text())).trim();
+    const bin=atob(b64),bytes=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    heroUrl=URL.createObjectURL(new Blob([bytes],{type:'image/webp'}));
+    return heroUrl;
+  }
+
+  async function apply(){
     scheduled=false;
     const root=document.getElementById('detailContent');
     if(!isRhino(root)) return;
+    const heroSrc=await getHero();
 
     const info=root.querySelector('.infographic');
     info?.classList.add('v40-engine','v40-javan-rhino');
 
     const hero=root.querySelector('.animal-visual img');
-    if(hero){
-      hero.src=HERO;
+    if(hero && hero.src!==heroSrc){
+      hero.src=heroSrc;
       hero.alt='Rinoceronte-de-Java';
       hero.classList.add('v40-hero');
       hero.style.setProperty('object-fit','contain','important');
@@ -37,8 +50,8 @@
       const text=item.querySelector('p');
       if(title) title.textContent=cfg[i][0];
       if(text) text.textContent=cfg[i][1];
-      if(img){
-        img.src=HERO;
+      if(img && img.src!==heroSrc){
+        img.src=heroSrc;
         img.alt=cfg[i][0];
         img.style.setProperty('width','100%','important');
         img.style.setProperty('height','100%','important');
@@ -51,7 +64,6 @@
 
     const card=root.querySelector('.where-card');
     if(card){
-      // O WEBP já contém o título editorial ONDE VIVE?.
       card.querySelector(':scope > .heading')?.remove();
       let map=card.querySelector('img.v43-static-map,img');
       const dynamic=card.querySelector('.leaflet-container,#speciesRangeMap,.species-range-map');
@@ -59,7 +71,7 @@
         map=document.createElement('img');
         dynamic.replaceWith(map);
       }
-      if(map){
+      if(map && !map.src.includes('/generated-v43/javan-rhino/map_range.webp')){
         map.src=MAP;
         map.alt='Mapa editorial da distribuição do Rinoceronte-de-Java em Ujung Kulon';
         map.className='v43-static-map zoomable-image';
@@ -73,24 +85,32 @@
       }
     }
 
-    // O mapa é informativo: nunca permitir crop no mobile/tablet.
     root.querySelectorAll('.where-card img').forEach(img=>{
       img.style.setProperty('height','auto','important');
       img.style.setProperty('max-height','none','important');
       img.style.setProperty('aspect-ratio','auto','important');
       img.style.setProperty('object-fit','contain','important');
     });
+
+    // Complete the herbivorous diet with reliable photographic sources.
+    root.querySelectorAll('.v40-diet-grid article').forEach(article=>{
+      const label=article.querySelector('b')?.textContent?.trim().toUpperCase();
+      const img=article.querySelector('img');
+      if(!img)return;
+      if(label==='FOLHAS' && img.src!==LEAVES){img.src=LEAVES;img.alt='Folhas tropicais';img.referrerPolicy='no-referrer'}
+      if(label==='RAMOS' && img.src!==BRANCHES){img.src=BRANCHES;img.alt='Ramos com folhas';img.referrerPolicy='no-referrer'}
+    });
   }
 
   function schedule(){
     if(scheduled) return;
     scheduled=true;
-    requestAnimationFrame(apply);
+    requestAnimationFrame(()=>apply().catch(console.error));
   }
 
   function start(){
     const root=document.getElementById('detailContent');
-    if(root) new MutationObserver(schedule).observe(root,{childList:true,subtree:true,attributes:true,attributeFilter:['src']});
+    if(root) new MutationObserver(schedule).observe(root,{childList:true,subtree:true});
     document.addEventListener('click',()=>setTimeout(schedule,0),true);
     window.addEventListener('resize',schedule,{passive:true});
     schedule();
