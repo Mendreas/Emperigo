@@ -1,7 +1,7 @@
 (()=>{
   const NAME='ORANGOTANGO-DE-SUMATRA';
   const COMMONS='https://commons.wikimedia.org/wiki/Special:FilePath/';
-  const HERO=COMMONS+encodeURIComponent('Sumatran Orangutan Pongo abelii (7930411566).jpg');
+  const HERO='assets/generated-v55/sumatran-orangutan/animal.webp';
   const HABITAT=COMMONS+encodeURIComponent('Orang utan sumatra.jpg');
   const DIET=[
     [COMMONS+encodeURIComponent('Ficus racemosa fruits.jpg'),'FIGOS E FRUTOS','Base energética'],
