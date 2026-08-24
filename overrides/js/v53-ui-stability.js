@@ -3,6 +3,39 @@
   const modal=()=>document.getElementById('imageModal');
   let suppressUntil=0;
 
+  // Do not request obsolete hero assets before the definitive editorial image.
+  // Exact legacy sources only: documentary/postal images remain untouched.
+  const TRANSPARENT='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+  const rewriteHeroSource=value=>{
+    const s=String(value??'');
+    if(s.includes('assets/generated-v34/amur-leopard/animal-final.webp')){
+      return 'assets/generated-v34/amur-leopard/animal.webp?v=4.3.20';
+    }
+    if(s.includes('assets/generated-v43/sumatran-tiger/animal_main.webp')) return TRANSPARENT;
+    if(s.includes('assets/generated-v43/javan-rhino/animal_main.webp')) return TRANSPARENT;
+    return value;
+  };
+
+  if(!window.__atlasHeroSourceGuard){
+    window.__atlasHeroSourceGuard=true;
+    const srcDesc=Object.getOwnPropertyDescriptor(HTMLImageElement.prototype,'src');
+    if(srcDesc?.set&&srcDesc?.get){
+      Object.defineProperty(HTMLImageElement.prototype,'src',{
+        configurable:srcDesc.configurable,
+        enumerable:srcDesc.enumerable,
+        get:srcDesc.get,
+        set(value){srcDesc.set.call(this,rewriteHeroSource(value));}
+      });
+    }
+    const nativeSetAttribute=Element.prototype.setAttribute;
+    Element.prototype.setAttribute=function(name,value){
+      if(this instanceof HTMLImageElement&&String(name).toLowerCase()==='src'){
+        return nativeSetAttribute.call(this,name,rewriteHeroSource(value));
+      }
+      return nativeSetAttribute.call(this,name,value);
+    };
+  }
+
   function finishClose(){
     const m=modal();
     if(!m)return;
@@ -18,9 +51,6 @@
     const m=modal();
     if(!m)return;
     suppressUntil=Date.now()+450;
-    // iOS can dispatch a synthetic click after touch/pointer release.  Keep an
-    // invisible shield alive briefly so that click cannot land on the image
-    // underneath and immediately reopen the lightbox.
     m.classList.add('v53-closing');
     m.style.setProperty('opacity','0','important');
     m.style.setProperty('pointer-events','auto','important');
@@ -37,20 +67,15 @@
     return path.some(n=>n?.id==='imageModalClose') || (e.target instanceof Element && !!e.target.closest('#imageModalClose'));
   }
 
-  // Use pointerdown/touchstart, not release: Safari sometimes sends a second
-  // synthetic click after touchend.  The shield above absorbs that click.
   ['pointerdown','touchstart','mousedown'].forEach(type=>document.addEventListener(type,e=>{
     if(isCloseControl(e)) closeModal(e);
   },true));
 
-  // Keyboard/mouse accessibility fallback.
   document.addEventListener('click',e=>{
     if(Date.now()<suppressUntil){e.preventDefault();e.stopPropagation();e.stopImmediatePropagation?.();return;}
     if(isCloseControl(e)||e.target.id==='imageModal'||e.target.id==='imageModalStage') closeModal(e);
   },true);
 
-  // Remove the previous species DOM before app.js builds the next sheet. This
-  // prevents Safari from retaining the last decoded animal for one paint frame.
   document.addEventListener('pointerdown',e=>{
     const trigger=e.target instanceof Element?e.target.closest('.species-card[data-id],.list-row[data-id],#mapBottomCard'):null;
     if(!trigger)return;
