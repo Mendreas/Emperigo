@@ -1,0 +1,1 @@
+Binary orangutan asset is maintained in Git object storage.
