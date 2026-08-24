@@ -1,8 +1,8 @@
 (()=>{
   const ROOT='assets/generated-v34/amur-leopard/';
-  const HERO=ROOT+'animal.webp?v=4.3.10';
-  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.10';
-  const STAMP='amur-leopard:v4310';
+  const HERO=ROOT+'animal.webp?v=4.3.11';
+  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.11';
+  const STAMP='amur-leopard:v4311';
   let scheduled=false;
 
   function isLeopard(root){
@@ -15,22 +15,23 @@
     const visual=data?.querySelector('.animal-visual');
     if(!data||!stats||!visual) return;
 
-    if(!window.matchMedia('(max-width:700px)').matches){
-      return;
-    }
+    if(!window.matchMedia('(max-width:700px)').matches) return;
 
-    /* Keep the introductory paragraph above both columns, exactly as in the
-       model mobile layout, then place stats at left and animal at right. */
+    /* Intro is a full-width row. Stats stay together as one left column,
+       while the editorial animal occupies the right column. */
     const intro=stats.querySelector('.intro');
     if(intro && intro.parentElement===stats){
       intro.classList.add('v47-amur-mobile-intro');
       data.insertBefore(intro,stats);
     }
 
+    const compact=window.matchMedia('(max-width:430px)').matches;
+    const panelHeight=compact?'330px':'360px';
+
     data.style.setProperty('display','grid','important');
-    data.style.setProperty('grid-template-columns','minmax(0,52%) minmax(0,48%)','important');
+    data.style.setProperty('grid-template-columns',compact?'minmax(0,50%) minmax(0,50%)':'minmax(0,49%) minmax(0,51%)','important');
     data.style.setProperty('grid-template-rows','auto auto','important');
-    data.style.setProperty('column-gap','4px','important');
+    data.style.setProperty('column-gap',compact?'0':'4px','important');
     data.style.setProperty('align-items','start','important');
 
     const movedIntro=data.querySelector(':scope > .v47-amur-mobile-intro');
@@ -40,17 +41,31 @@
       movedIntro.style.setProperty('margin','0 0 18px','important');
     }
 
+    /* Critical fix: do NOT use display:contents here.  That made each .stat
+       a grid item and allowed the image to occupy only the first statistic's
+       row, pushing CR and Ásia underneath it. */
+    stats.style.setProperty('display','flex','important');
+    stats.style.setProperty('flex-direction','column','important');
+    stats.style.setProperty('justify-content','space-between','important');
     stats.style.setProperty('grid-column','1','important');
     stats.style.setProperty('grid-row','2','important');
+    stats.style.setProperty('height',panelHeight,'important');
+    stats.style.setProperty('min-height','0','important');
     stats.style.setProperty('margin','0','important');
     stats.style.setProperty('min-width','0','important');
+
+    stats.querySelectorAll('.stat').forEach(stat=>{
+      stat.style.setProperty('grid-column','auto','important');
+      stat.style.setProperty('grid-row','auto','important');
+      stat.style.setProperty('min-width','0','important');
+    });
 
     visual.style.setProperty('grid-column','2','important');
     visual.style.setProperty('grid-row','2','important');
     visual.style.setProperty('width','100%','important');
-    visual.style.setProperty('height','330px','important');
+    visual.style.setProperty('height',panelHeight,'important');
     visual.style.setProperty('min-height','0','important');
-    visual.style.setProperty('max-height','330px','important');
+    visual.style.setProperty('max-height',panelHeight,'important');
     visual.style.setProperty('margin','0','important');
     visual.style.setProperty('align-self','start','important');
     visual.style.setProperty('overflow','visible','important');
@@ -62,9 +77,9 @@
       img.style.setProperty('width','100%','important');
       img.style.setProperty('height','100%','important');
       img.style.setProperty('min-height','0','important');
-      img.style.setProperty('max-height','330px','important');
+      img.style.setProperty('max-height',panelHeight,'important');
       img.style.setProperty('object-fit','contain','important');
-      img.style.setProperty('object-position','center top','important');
+      img.style.setProperty('object-position','center center','important');
     }
   }
 
@@ -73,8 +88,6 @@
     const root=document.getElementById('detailContent');
     if(!isLeopard(root)) return;
 
-    /* IMPORTANT: this finalizer must not set data-v43-engine.
-       That marker belongs to the common species renderer. */
     const info=root.querySelector('.infographic');
     if(info){
       info.dataset.v47Finalized=STAMP;
@@ -87,7 +100,7 @@
       hero.alt='Leopardo-de-Amur';
       hero.classList.add('v40-hero');
       hero.style.objectFit='contain';
-      hero.style.objectPosition='center top';
+      hero.style.objectPosition='center center';
     }
 
     applyMobileAnimalLayout(root);
