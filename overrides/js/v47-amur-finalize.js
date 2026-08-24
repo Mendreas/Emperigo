@@ -1,12 +1,71 @@
 (()=>{
   const ROOT='assets/generated-v34/amur-leopard/';
-  const HERO=ROOT+'animal.webp?v=4.3.9';
-  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.9';
-  const STAMP='amur-leopard:v439';
+  const HERO=ROOT+'animal.webp?v=4.3.10';
+  const MAP=ROOT+'mapa_distribuicao.webp?v=4.3.10';
+  const STAMP='amur-leopard:v4310';
   let scheduled=false;
 
   function isLeopard(root){
     return root?.querySelector('.info-title h1')?.textContent?.trim().toUpperCase()==='LEOPARDO-DE-AMUR';
+  }
+
+  function applyMobileAnimalLayout(root){
+    const data=root.querySelector('.animal-data');
+    const stats=data?.querySelector('.stats-column');
+    const visual=data?.querySelector('.animal-visual');
+    if(!data||!stats||!visual) return;
+
+    if(!window.matchMedia('(max-width:700px)').matches){
+      return;
+    }
+
+    /* Keep the introductory paragraph above both columns, exactly as in the
+       model mobile layout, then place stats at left and animal at right. */
+    const intro=stats.querySelector('.intro');
+    if(intro && intro.parentElement===stats){
+      intro.classList.add('v47-amur-mobile-intro');
+      data.insertBefore(intro,stats);
+    }
+
+    data.style.setProperty('display','grid','important');
+    data.style.setProperty('grid-template-columns','minmax(0,52%) minmax(0,48%)','important');
+    data.style.setProperty('grid-template-rows','auto auto','important');
+    data.style.setProperty('column-gap','4px','important');
+    data.style.setProperty('align-items','start','important');
+
+    const movedIntro=data.querySelector(':scope > .v47-amur-mobile-intro');
+    if(movedIntro){
+      movedIntro.style.setProperty('grid-column','1 / -1','important');
+      movedIntro.style.setProperty('grid-row','1','important');
+      movedIntro.style.setProperty('margin','0 0 18px','important');
+    }
+
+    stats.style.setProperty('grid-column','1','important');
+    stats.style.setProperty('grid-row','2','important');
+    stats.style.setProperty('margin','0','important');
+    stats.style.setProperty('min-width','0','important');
+
+    visual.style.setProperty('grid-column','2','important');
+    visual.style.setProperty('grid-row','2','important');
+    visual.style.setProperty('width','100%','important');
+    visual.style.setProperty('height','330px','important');
+    visual.style.setProperty('min-height','0','important');
+    visual.style.setProperty('max-height','330px','important');
+    visual.style.setProperty('margin','0','important');
+    visual.style.setProperty('align-self','start','important');
+    visual.style.setProperty('overflow','visible','important');
+    visual.style.setProperty('background','transparent','important');
+
+    const img=visual.querySelector('img');
+    if(img){
+      img.style.setProperty('display','block','important');
+      img.style.setProperty('width','100%','important');
+      img.style.setProperty('height','100%','important');
+      img.style.setProperty('min-height','0','important');
+      img.style.setProperty('max-height','330px','important');
+      img.style.setProperty('object-fit','contain','important');
+      img.style.setProperty('object-position','center top','important');
+    }
   }
 
   function finalize(){
@@ -15,9 +74,7 @@
     if(!isLeopard(root)) return;
 
     /* IMPORTANT: this finalizer must not set data-v43-engine.
-       That marker belongs to the common species renderer; setting it here
-       made v40 believe the leopard had already been rendered, so its
-       responsive classes, trait assets and diet layout never ran. */
+       That marker belongs to the common species renderer. */
     const info=root.querySelector('.infographic');
     if(info){
       info.dataset.v47Finalized=STAMP;
@@ -30,8 +87,10 @@
       hero.alt='Leopardo-de-Amur';
       hero.classList.add('v40-hero');
       hero.style.objectFit='contain';
-      hero.style.objectPosition='center bottom';
+      hero.style.objectPosition='center top';
     }
+
+    applyMobileAnimalLayout(root);
 
     const card=root.querySelector('.where-card');
     if(!card) return;
@@ -77,6 +136,7 @@
     const root=document.getElementById('detailContent');
     if(!root) return;
     new MutationObserver(schedule).observe(root,{childList:true,subtree:true});
+    window.addEventListener('resize',schedule,{passive:true});
     schedule();
   }
 
