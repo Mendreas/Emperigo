@@ -37,7 +37,7 @@
 
     const hero=root.querySelector('.animal-visual img');
     setImg(hero,heroSrc,'Rinoceronte-de-Java');
-    if(hero){hero.classList.add('v40-hero');hero.style.setProperty('object-fit','contain','important');hero.style.setProperty('object-position','center bottom','important')}
+    if(hero){hero.classList.add('v40-hero');hero.style.setProperty('object-fit','contain','important');hero.style.setProperty('object-position','center center','important')}
 
     const cfg=[
       ['UM ÚNICO CORNO','O pequeno corno, normalmente mais evidente nos machos, distingue a espécie entre os rinocerontes asiáticos.','52% 24%','2.35'],
