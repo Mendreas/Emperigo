@@ -1,0 +1,24 @@
+{
+  "slug": "hawksbill-turtle",
+  "commonName": "Tartaruga-de-Pente",
+  "scientificName": "Eretmochelys imbricata",
+  "assets": {
+    "animal": "animal.webp",
+    "documentary": "documentary.webp",
+    "habitat": "habitat.webp",
+    "map": "map_range.webp"
+  },
+  "traits": [
+    "trait-01.webp",
+    "trait-02.webp",
+    "trait-03.webp",
+    "trait-04.webp"
+  ],
+  "diet": [
+    "diet-01.webp",
+    "diet-02.webp",
+    "diet-03.webp",
+    "diet-04.webp",
+    "diet-05.webp"
+  ]
+}
