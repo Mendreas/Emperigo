@@ -6,40 +6,41 @@
     turtle.dietItems=['Esponjas','Algas','Tunicados','Coral mole','Crustáceos','Pequenos invertebrados'];
     turtle.dietNotes=['Alimento principal','Complemento vegetal','Consumidos no recife','Oportunisticamente','Complemento animal','Diversidade de pequenas presas'];
     turtle.dietImages=[
-      'assets/generated-v60/hawksbill-turtle/diet-01.webp',
-      'assets/generated-v60/hawksbill-turtle/diet-02.webp',
-      'assets/generated-v60/hawksbill-turtle/diet-03.webp',
-      'assets/generated-v60/hawksbill-turtle/diet-04.webp',
-      'assets/generated-v60/hawksbill-turtle/diet-05.webp',
-      'https://commons.wikimedia.org/wiki/Special:FilePath/Sabellastarte%20spectabilis%20193162670.jpg'
+      'assets/generated-v60/hawksbill-turtle/diet-01.webp','assets/generated-v60/hawksbill-turtle/diet-02.webp','assets/generated-v60/hawksbill-turtle/diet-03.webp','assets/generated-v60/hawksbill-turtle/diet-04.webp','assets/generated-v60/hawksbill-turtle/diet-05.webp','https://commons.wikimedia.org/wiki/Special:FilePath/Sabellastarte%20spectabilis%20193162670.jpg'
     ];
   }
 
   const rhino=rows.find(x=>x&&x.id==='black-rhino');
   if(rhino){
     Object.assign(rhino,{
-      name:'Rinoceronte-Negro',scientific:'Diceros bicornis',status:'CR',statusLabel:'Em perigo crítico',category:'Mamíferos',region:'África',place:'África oriental e austral',initials:'RN',
-      population:'~6 500',trend:'Em recuperação lenta',
-      intro:'Força e resiliência em extinção. O rinoceronte-negro já foi comum em grande parte de África, mas a caça furtiva reduziu drasticamente a população.',
-      animalImage:'assets/generated-v60/black-rhino/animal.webp',
-      habitat:'Savanas, matagais, zonas áridas e áreas montanhosas',habitatDescription:'Ocupa savanas e pradarias, arbustos espinhosos, semidesertos e áreas montanhosas na África subsaariana.',
-      habitatImage:'assets/generated-v60/black-rhino/habitat.webp',mapImage:'assets/generated-v60/black-rhino/map_range.webp',mapHasTitle:true,
+      name:'Rinoceronte-Negro',scientific:'Diceros bicornis',status:'CR',statusLabel:'Em perigo crítico',category:'Mamíferos',region:'África',place:'África oriental e austral',initials:'RN',population:'~6 500',trend:'Em recuperação lenta',intro:'Força e resiliência em extinção. O rinoceronte-negro já foi comum em grande parte de África, mas a caça furtiva reduziu drasticamente a população.',animalImage:'assets/generated-v60/black-rhino/animal.webp',habitat:'Savanas, matagais, zonas áridas e áreas montanhosas',habitatDescription:'Ocupa savanas e pradarias, arbustos espinhosos, semidesertos e áreas montanhosas na África subsaariana.',habitatImage:'assets/generated-v60/black-rhino/habitat.webp',mapImage:'assets/generated-v60/black-rhino/map_range.webp',mapHasTitle:true,
       metrics:[{value:'~6 500',label:'POPULAÇÃO',note:'aproximadamente'},{value:'800–1 400 kg',label:'PESO',note:'adultos'},{value:'~1,6 m',label:'ALTURA',note:'ao ombro'},{value:'2',label:'CORNOS',note:'anterior geralmente maior'}],
+      traits:[{title:'COMPORTAMENTO SOLITÁRIO',text:'São geralmente solitários e territoriais, exceto fêmeas acompanhadas pelas crias.',crop:'52% 48%',zoom:1.55},{title:'VISÃO E OLFATO AGUDOS',text:'A visão é limitada, mas o olfato e a audição são muito desenvolvidos para detetar perigos.',crop:'72% 35%',zoom:2.3},{title:'CORREDORES NATURAIS',text:'Usam rotas regulares através dos seus territórios, criando trilhos conhecidos.',crop:'48% 60%',zoom:1.7},{title:'GESTAÇÃO LONGA',text:'A gestação dura cerca de 15–16 meses e normalmente nasce apenas uma cria.',crop:'48% 52%',zoom:1.55},{title:'PELE SENSÍVEL',text:'Apesar da aparência grossa, a pele é sensível ao sol e a picadas de insetos.',crop:'38% 43%',zoom:2.2}],
+      diet:'Herbívoro ramoneador; alimenta-se de folhas, brotos, frutos, ramos e vegetação herbácea.',dietTitle:'DIETA: HERBÍVORO',dietItems:['Folhas','Brotos','Frutos','Ramos','Grama'],dietNotes:['Base da dieta','Vegetação jovem','Consumidos quando disponíveis','Arbustos e pequenas árvores','Complemento herbáceo'],dietImages:[1,2,3,4,5].map(i=>`assets/generated-v60/black-rhino/diet-0${i}.webp`),habitatFacts:['Savanas e pradarias','Arbustos espinhosos','Áreas montanhosas','Zonas áridas'],threats:['Caça furtiva','Perda de habitat','Conflitos humanos','Mudanças climáticas','Baixa diversidade genética'],actions:['Proteger habitats','Combater a caça ilegal','Apoiar comunidades locais','Educar e consciencializar','Registar e monitorizar'],conservationMessage:'Cada rinoceronte importa. A conservação hoje garante que eles existam amanhã.'
+    });
+  }
+
+  const elephant=rows.find(x=>x&&(x.id==='african-forest-elephant'||x.scientific==='Loxodonta cyclotis'));
+  if(elephant){
+    Object.assign(elephant,{
+      name:'Elefante-da-Floresta-Africana',scientific:'Loxodonta cyclotis',status:'CR',statusLabel:'Em perigo crítico',category:'Mamíferos',region:'África',place:'África Central e Ocidental',initials:'EF',
+      population:'~135 690',trend:'Em declínio',
+      intro:'O guardião silencioso da floresta. Menor que o elefante-da-savana, vive nas florestas tropicais densas da África Central e Ocidental e é um importante dispersor de sementes.',
+      animalImage:'assets/generated-v60/african-forest-elephant/animal.webp',documentaryImage:'assets/generated-v60/african-forest-elephant/documentary.webp',
+      habitat:'Florestas tropicais densas',habitatDescription:'Vive sobretudo em florestas tropicais húmidas densas da África Central e Ocidental, usando clareiras, zonas alagadas e locais ricos em minerais.',habitatImage:'assets/generated-v60/african-forest-elephant/habitat.webp',mapImage:'assets/generated-v60/african-forest-elephant/map_range.webp',mapHasTitle:true,
+      metrics:[{value:'~135 690',label:'POPULAÇÃO',note:'estimativa robusta recente'},{value:'2–5 t',label:'PESO',note:'adultos'},{value:'2,4–3 m',label:'ALTURA',note:'aprox. ao ombro'},{value:'CR',label:'IUCN',note:'em perigo crítico'}],
       traits:[
-        {title:'COMPORTAMENTO SOLITÁRIO',text:'São geralmente solitários e territoriais, exceto fêmeas acompanhadas pelas crias.',crop:'52% 48%',zoom:1.55},
-        {title:'VISÃO E OLFATO AGUDOS',text:'A visão é limitada, mas o olfato e a audição são muito desenvolvidos para detetar perigos.',crop:'72% 35%',zoom:2.3},
-        {title:'CORREDORES NATURAIS',text:'Usam rotas regulares através dos seus territórios, criando trilhos conhecidos.',crop:'48% 60%',zoom:1.7},
-        {title:'GESTAÇÃO LONGA',text:'A gestação dura cerca de 15–16 meses e normalmente nasce apenas uma cria.',crop:'48% 52%',zoom:1.55},
-        {title:'PELE SENSÍVEL',text:'Apesar da aparência grossa, a pele é sensível ao sol e a picadas de insetos.',crop:'38% 43%',zoom:2.2}
+        {title:'DUAS “PONTAS” NA TROMBA',text:'A extremidade da tromba tem dois lóbulos, usados como dedos para manipular objetos.',image:'assets/generated-v60/african-forest-elephant/trait-01.webp'},
+        {title:'ORELHAS MAIS ARREDONDADAS',text:'As orelhas são relativamente arredondadas, uma das diferenças visíveis face ao elefante-da-savana.',image:'assets/generated-v60/african-forest-elephant/trait-02.webp'},
+        {title:'PRESAS RETAS E DESCENDENTES',text:'As presas tendem a ser mais direitas e apontadas para baixo, facilitando a deslocação na vegetação densa.',image:'assets/generated-v60/african-forest-elephant/trait-03.webp'},
+        {title:'MEGA-JARDINEIRO DA FLORESTA',text:'Transporta e dispersa sementes a grandes distâncias, ajudando a regenerar a floresta.',image:'assets/generated-v60/african-forest-elephant/trait-04.webp'}
       ],
-      diet:'Herbívoro ramoneador; alimenta-se de folhas, brotos, frutos, ramos e vegetação herbácea.',dietTitle:'DIETA: HERBÍVORO',
-      dietItems:['Folhas','Brotos','Frutos','Ramos','Grama'],
-      dietNotes:['Base da dieta','Vegetação jovem','Consumidos quando disponíveis','Arbustos e pequenas árvores','Complemento herbáceo'],
-      dietImages:[1,2,3,4,5].map(i=>`assets/generated-v60/black-rhino/diet-0${i}.webp`),
-      habitatFacts:['Savanas e pradarias','Arbustos espinhosos','Áreas montanhosas','Zonas áridas'],
-      threats:['Caça furtiva','Perda de habitat','Conflitos humanos','Mudanças climáticas','Baixa diversidade genética'],
-      actions:['Proteger habitats','Combater a caça ilegal','Apoiar comunidades locais','Educar e consciencializar','Registar e monitorizar'],
-      conservationMessage:'Cada rinoceronte importa. A conservação hoje garante que eles existam amanhã.'
+      diet:'Herbívoro; procura sobretudo frutos, folhas, sementes, ramos e casca de árvores.',dietTitle:'DIETA: HERBÍVORO',
+      dietItems:['Folhas','Frutos','Sementes','Ramos','Cascas'],dietNotes:['Vegetação abundante','Muito importantes na dieta','Dispersas pela floresta','Ramos e rebentos','Casca de árvores'],dietImages:[1,2,3,4,5].map(i=>`assets/generated-v60/african-forest-elephant/diet-0${i}.webp`),
+      habitatFacts:['Florestas densas','Clareiras e zonas alagadas','África Central e Ocidental','Alta humidade'],
+      threats:['Caça furtiva','Perda de habitat','Fragmentação','Conflito humano-elefante','Alterações climáticas'],
+      actions:['Proteger áreas florestais','Combater a caça ilegal','Apoiar comunidades locais','Restaurar e ligar florestas','Educar e consciencializar'],
+      conservationMessage:'Proteger o elefante-da-floresta-africana é proteger as florestas e o futuro.'
     });
   }
 })();
